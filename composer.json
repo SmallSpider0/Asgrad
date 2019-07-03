@@ -1,0 +1,6 @@
+{
+    "require": {
+        "webgeeker/validation": "^0.4.2",
+        "thingengineer/mysqli-database-class": "dev-master"
+    }
+}

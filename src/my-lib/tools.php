@@ -1,10 +1,12 @@
 <?php
 header('Access-Control-Allow-Origin:*');
 
-require_once Root_Path . '/src/my-lib/MySQLi/MysqliDb.php';
 require_once Root_Path . '/config.php';
 require_once Root_Path . '/input_config.php';
 require_once Root_Path . '/au_config.php';
+require_once Root_Path . "/vendor/autoload.php";
+
+use WebGeeker\Validation\Validation;
 
 global $db;
 
@@ -102,55 +104,28 @@ function msg($code, $msg = 'success')
     echo json_encode($arr, JSON_UNESCAPED_UNICODE);
 }
 
-function check_var(&$var, $default = '')
+function check_input($path_pieces)
 {
-    if (!isset($var) and $default != '') {
-        $var = $default;
-    }
-    return isset($var);
-}
 
-function check_input($path_pieces, $get)
-{
-    if (count($path_pieces) > 3) {
+    if (count($path_pieces) > 2) {
         return 'url error';
     }
     global $input_config;
 
-    if (count($path_pieces) == 2) { //2级目录
-        if (!isset($input_config[$path_pieces[0]][$path_pieces[1]])) {
-            return 'url error';
-        } else {
-            $arr = $input_config[$path_pieces[0]][$path_pieces[1]];
-        }
-    } elseif (count($path_pieces) == 3) { //3级目录
-        if (!isset($input_config[$path_pieces[0]][$path_pieces[1]][$path_pieces[2]])) {
-            return 'url error';
-        } else {
-            $arr = $input_config[$path_pieces[0]][$path_pieces[1]][$path_pieces[2]];
-        }
+    if (!isset($input_config[$path_pieces[0]][$path_pieces[1]])) {
+        return 'url error';
+    } else {
+        $para = $input_config[$path_pieces[0]][$path_pieces[1]];
     }
+
 
     //输入值判断
+    try {
+        Validation::validate($_POST, $para);
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
 
-    for ($i = 0; $i < count($get); $i += 2) {
-        $getProcessed[$get[$i]] = $get[$i + 1];
-    }
-    foreach ($arr as $value) {
-        $v = explode("@", $value);
-        $attr = $v[0];
-        $default = '';
-        if (count($v) == 2) {
-            $default = $v[1];
-        }
-        //兼容get方式传参
-        if (check_var($getProcessed[$attr])) {
-            $_POST[$attr] = $getProcessed[$attr];
-        }
-        if (!check_var($_POST[$attr], $default)) {
-            return $attr;
-        }
-    }
     return 'true';
 }
 
@@ -159,7 +134,8 @@ function random($length)
     $key = '';
     $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
     for ($i = 0; $i < $length; $i++) {
-        $key .= $pattern{mt_rand(0, 61)}; //生成php随机数
+        $key .= $pattern{
+            mt_rand(0, 61)}; //生成php随机数
     }
     return $key;
 }
@@ -228,7 +204,6 @@ function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output =
     } else {
         return bin2hex(substr($output, 0, $key_length));
     }
-
 }
 
 function encryptPsw($psw)
@@ -244,7 +219,7 @@ function encryptPsw($psw)
 
 function hideStr($str)
 {
-//判断是否包含中文字符
+    //判断是否包含中文字符
     if (preg_match("/[\x{4e00}-\x{9fa5}]+/u", $str)) {
         //按照中文字符计算长度
         $len = mb_strlen($str, 'UTF-8');
