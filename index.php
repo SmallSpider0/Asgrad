@@ -1,13 +1,12 @@
 <?php
-error_reporting(E_ALL || ~E_NOTICE);
-define(Root_Path, dirname(__FILE__));
+//error_reporting(E_ALL || ~E_NOTICE);
+define('Root_Path', dirname(__FILE__));
 
 require_once "src/my-lib/tools.php";
 
-//引入对应的class
+//输入值解析
 
-$paths = explode("@", $_SERVER["QUERY_STRING"]);
-$path = $paths[0];
+$path = $_SERVER["QUERY_STRING"];
 $path_pieces = explode("/", $path);
 
 
@@ -18,30 +17,31 @@ if ($check_input_ret != 'true') {
     return;
 }
 
-/*
-//授权判断
 
+//授权判断
 $can_run = false;
-if (!$au_config['global']) {
+
+
+$role = 0; //角色 默认为无角色
+if (!$au_config['global']) {//全局开关判断
     $can_run = true;
 } else {
-    if (in_array($path, $au_config['yes'])) { //判断是否是需要授权的接口
-        if (check_token($_POST['id'], $_POST['api_key'], $_POST['timestamp'], $_POST['sign'], $path)) {
+    if (in_array($path_pieces[1], $au_config[$path_pieces[0]]['no'])) { //如果不需要授权
+        $can_run = true;
+    } elseif (isset($au_config[$path_pieces[0]]['yes'][$path_pieces[1]])) { //如果需要授权
+        if ($role = check_token($_POST['user_id'], $_POST['api_key'], $_POST['timestamp'], $_POST['sign'], $path, $au_config[$path_pieces[0]]['yes'][$path_pieces[1]])) {
             $can_run = true;
         }
-    } elseif (in_array($path, $au_config['no'])) { //判断是否是不需要授权的接口
-        $can_run = true;
     }
 }
 
 //如果允许执行
-$class = end($path_pieces);
+$class = $path_pieces[1];
 if ($can_run) {
     require_once "src/" . $path . ".php";
     $o = new $class();
-    $o->run();
+    $o->run($role);
 } else {
     msg(410, '未授权的访问');
     return;
 }
-*/

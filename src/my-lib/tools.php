@@ -69,15 +69,31 @@ function db_connect()
     $db = new MysqliDb($dbcfg['dbhost'], $dbcfg['dbuser'], $dbcfg['dbpsw'], $dbcfg['dbname']);
 }
 
-
-function check_token($id, $api_key, $timestamp, $sign, $url)
+function check_var(&$var, $default = '')
 {
-    $table = "user";
+    if (!isset($var) and $default != '') {
+        $var = $default;
+    }
+    return isset($var);
+}
+
+function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
+{
+    $tables = ["admin_login", "user_login_web", "user_login_pc"];
     global $db;
     global $config;
     if (check_var($id) and check_var($api_key) and check_var($timestamp) and check_var($sign)) {
-        $db->where('id', $id)->where('api_key', $api_key);
-        $res = $db->getOne($table, "security_key, time_out");
+        //判断调用接口的角色
+        foreach ($auth as $value) {
+            $db->where('id', $id)->where('api_key', $api_key);
+            $res = $db->getOne($tables[$value - 1], "security_key, time_out");
+            if ($res) {
+                $table = $tables[$value - 1];
+                $role = $value;
+                break;
+            }
+        }
+        if (!$res) return false;
         if ($res['time_out'] > time() && abs(time() - $timestamp) < $config['security']['token_time_offset']) { //还没过期
             if ($sign == hash_hmac("sha256", $api_key . $timestamp . $url, $res['security_key'])) {
                 //调用接口后 刷新过期时间
@@ -88,7 +104,7 @@ function check_token($id, $api_key, $timestamp, $sign, $url)
                     $db->where('id', $id);
                     $db->update($table, $updateData);
                 }
-                return true;
+                return $role;
             }
         }
     }
@@ -213,7 +229,7 @@ function encryptPsw($psw)
     $pswEncrypted = pbkdf2('SHA256', $psw, $salt, 1000, 32);
     return array(
         'salt' => $salt,
-        'password' => $pswEncrypted,
+        'passwd' => $pswEncrypted,
     );
 }
 

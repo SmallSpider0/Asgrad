@@ -10,7 +10,7 @@ $au_config = [
     'user' => [
         'no' => [
             'register',
-            'login'
+            'login',
         ],
         'yes' => [
             'getUserInfo' => [2, 3],

@@ -1,43 +1,43 @@
 <?php
 
+
+//输入参数配置
 //https://github.com/photondragon/webgeeker-validation
-//输入参数配置 默认值用@默认值表示,留空表示不需要判断输入值
-//输入值不包括【只会】在授权用到的那些
-//如 startTime@0 表示startTime的默认值为0
-$input_config = array(
+
+$input_config = [
     //用户模块
-    'user' => array(
+    'user' => [
         'register' => [
             'phone' => 'Required|Numbers',
             'email' => 'Required|Email',
             'company_name' => 'Required|Str',
-            'cdkey' => 'Required|Str',
             'passwd_web' => 'Required|Str',
             'passwd_pc' => 'Required|Str',
         ],
         'login' =>  [
-            'mode' => 'Required|IntIn:0,1',
+            'mode1' => 'Required|IntIn:0,1',
+            'mode2' => 'Required|IntIn:0,1',
             'account' => 'Required|Str',
             'passwd' => 'Required|Str',
         ],
         'getUserInfo' => [
-            'userId' => 'Required|IntGt:0',
+            'user_id' => 'Required|IntGt:0',
         ],
         'changeUserInfo' => [
-            'userId' => 'Required|IntGt:0',
+            'user_id' => 'Required|IntGt:0',
             'retest_times' => 'IntGeLe:0,10',
             'order_close_timeout' => 'IntGeLe:1,360',
         ],
         'changePasswd' => [
             'mode' => 'Required|IntIn:0,1',
-            'userId' => 'Required|IntGt:0',
-            'oldPasswd' => 'Required|Str',
-            'newPasswd' => 'Required|Str',
+            'user_id' => 'Required|IntGt:0',
+            'old_passwd' => 'Required|Str',
+            'new_passwd' => 'Required|Str',
         ],
-    ),
+    ],
 
     //订单模块
-    'order' => array(
+    'order' => [
         'submitOrder' =>  [
             'made_in' => 'Required|Str',
             'product_name' => 'Required|Str',
@@ -74,10 +74,10 @@ $input_config = array(
         'getOrderData' =>  [
             'order_num' => 'Required|Str',
         ],
-    ),
+    ],
 
     //日志模块
-    'log' => array(
+    'log' => [
         'getTestLogList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
@@ -148,10 +148,10 @@ $input_config = array(
             'order_num' => 'Required|Str',
             'sn' => 'Required|Str',
         ],
-    ),
+    ],
 
     //管理员模块
-    'admin' => array(
+    'admin' => [
         'login' =>  [
             'account' => 'Required|Str',
             'passwd' => 'Required|Str',
@@ -191,10 +191,10 @@ $input_config = array(
             'description' => 'Required|Str',
             'file' => 'Required|File',
         ],
-    ),
+    ],
 
     //通用模块
-    'util' => array(
+    'util' => [
         'heartBeat' =>  [
             'user_id' => 'Required|IntGe:1',
             'mode' => 'Required|IntIn:0,1,2',
@@ -207,5 +207,5 @@ $input_config = array(
             'user_id' => 'Required|IntGe:1',
             'version' => 'IntGe:1',
         ],
-    ),
-);
+    ],
+];
