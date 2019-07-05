@@ -58,6 +58,7 @@ $au_config = [
         ],
         'yes' => [
             'generateCDK' => [1],
+            'deleteCDK' => [1],
             'getCDKList' => [1],
             'getUserList' => [1],
             'getUserInfo' => [1],

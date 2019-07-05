@@ -161,6 +161,9 @@ $input_config = [
             'email' => 'Required|Email',
             'grant_time' => 'Required|IntGe:1',
         ],
+        'deleteCDK' =>  [
+            'id' => 'Required|IntGe:1',
+        ],
         'getCDKList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
