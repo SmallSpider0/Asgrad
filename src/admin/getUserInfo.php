@@ -2,13 +2,14 @@
 
 class getUserInfo
 {
-    private $table1 = "user_login_web";
-    private $table2 = "user_login_pc";
+    private $table = "user_info_all";
 
     public function run($ROLE)
     {
         global $db;
-        global $config;
-        
+        $user_id = $_POST['user_id'];
+
+        $db->where('user_id', $user_id);
+        db_getone($this->table, 'res');
     }
 }

@@ -181,7 +181,7 @@ $input_config = [
         ],
         'editUserInfo' =>  [
             'user_id' => 'Required|IntGe:1',
-            'grant_time_out' => 'DateTime',
+            'grant_time_out' => 'Date',
             'remark' => 'Str',
         ],
         'getUpdateHisList' =>  [

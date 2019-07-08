@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit7cff253644ba1d448882b6dcdb081754
 {
     public static $files = array (
+        '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
         '71ecd0286a4e74fd8732297fb587023c' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/MysqliDb.php',
         'd383f1ec7b1e54a09cb53eb6fcf751e0' => __DIR__ . '/..' . '/thingengineer/mysqli-database-class/dbObject.php',
     );
@@ -16,12 +17,20 @@ class ComposerStaticInit7cff253644ba1d448882b6dcdb081754
         array (
             'WebGeeker\\Validation\\' => 21,
         ),
+        'Q' => 
+        array (
+            'Qiniu\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'WebGeeker\\Validation\\' => 
         array (
             0 => __DIR__ . '/..' . '/webgeeker/validation/src/Validation',
+        ),
+        'Qiniu\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu',
         ),
     );
 

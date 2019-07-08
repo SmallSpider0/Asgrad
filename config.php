@@ -19,4 +19,10 @@ $config = array(
         'login' => 10, //每日允许连续登陆失败次数
         'token_time_offset' => 600, //token时间戳偏差容许值
     ),
+    //七牛云sdk
+    'qiniu-sdk' => array(
+        'accessKey' => 'Mftnw0ULVkfW-iq4pcK7g9wDwJ4MzD5Kq-Y-duD6',
+        'secretKey' => 'lMhYzRLHFQl_01NfCveXMx6f0FxBiWiISNu3YEa_',
+        'bucket' => 'eth-photo',
+    ),
 );

@@ -137,7 +137,7 @@ function check_input($path_pieces)
 
     //输入值判断
     try {
-        Validation::validate($_POST, $para);
+        Validation::validate(array_merge($_POST, $_FILES), $para);
     } catch (Exception $e) {
         return $e->getMessage();
     }
@@ -260,4 +260,34 @@ function hideStr($str)
         }
     }
     return $str;
+}
+
+use Qiniu\Auth;
+use Qiniu\Storage\UploadManager;
+
+function uploadFile($name)
+{
+    global $config;
+    $qiniu_cfg = $config['qiniu-sdk'];
+    $accessKey = $qiniu_cfg['accessKey'];
+    $secretKey = $qiniu_cfg['secretKey'];
+    $bucket = $qiniu_cfg['bucket'];
+
+    //获取文件
+    $extension = '.' . pathinfo($_FILES[$name]['name'], PATHINFO_EXTENSION);
+    $tmp = $_FILES[$name]['tmp_name'];
+    $md5 = md5_file($_FILES[$name]['tmp_name']);
+    $key = (string) time() . '_' . random(10) . $extension;
+
+    //上传
+    $auth = new Auth($accessKey, $secretKey);
+    $token = $auth->uploadToken($bucket);
+    $uploadMgr = new UploadManager();
+    $uploadMgr->putFile($token, $key, $tmp);
+
+    //返回
+    return array(
+        'key' => $key,
+        'md5' => $md5
+    );
 }
