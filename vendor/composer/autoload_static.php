@@ -21,6 +21,10 @@ class ComposerStaticInit7cff253644ba1d448882b6dcdb081754
         array (
             'Qiniu\\' => 6,
         ),
+        'D' => 
+        array (
+            'Dj\\' => 3,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -31,6 +35,10 @@ class ComposerStaticInit7cff253644ba1d448882b6dcdb081754
         'Qiniu\\' => 
         array (
             0 => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu',
+        ),
+        'Dj\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aileshe/upload/src/Upload',
         ),
     );
 

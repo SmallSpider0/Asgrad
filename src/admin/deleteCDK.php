@@ -12,7 +12,8 @@ class deleteCDK
         //-------------------【事务开始】-------------------
         $db->startTransaction();
 
-        $res = $db->rawQuery('select status from ' . $this->table . ' where id = ? for update', array($id))[0];//加锁
+        $db->setQueryOption('FOR UPDATE')->where('id', $id); //加锁
+        $res = $db->getOne($this->table, 'status');
         if (isset($res['status']) && $res['status'] == 0) {
             $updateData = array(
                 "status" => 2,

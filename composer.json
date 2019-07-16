@@ -2,6 +2,7 @@
     "require": {
         "webgeeker/validation": "^0.4.2",
         "thingengineer/mysqli-database-class": "dev-master",
-        "qiniu/php-sdk": "^7.2"
+        "qiniu/php-sdk": "^7.2",
+        "aileshe/upload": "*"
     }
 }

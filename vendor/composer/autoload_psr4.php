@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'WebGeeker\\Validation\\' => array($vendorDir . '/webgeeker/validation/src/Validation'),
     'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
+    'Dj\\' => array($vendorDir . '/aileshe/upload/src/Upload'),
 );

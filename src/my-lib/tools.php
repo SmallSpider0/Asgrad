@@ -109,7 +109,7 @@ function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
                     $db->where('id', $id);
                     $db->update($table, $updateData);
                 }
-                return $role;
+                return $role;//1 管理员 2 web 3 pc
             }
         }
     }

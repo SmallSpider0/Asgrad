@@ -22,7 +22,7 @@ if ($check_input_ret != 'true') {
 $can_run = false;
 
 
-$role = 0; //角色 默认为无角色
+$role = 0; //角色 默认为无角色 1 管理员 2 web 3 pc
 if (!$au_config['global']) {//全局开关判断
     $can_run = true;
 } else {
@@ -34,6 +34,7 @@ if (!$au_config['global']) {//全局开关判断
         }
     }
 }
+
 
 //如果允许执行
 $class = $path_pieces[1];

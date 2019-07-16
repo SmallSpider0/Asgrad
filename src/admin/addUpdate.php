@@ -15,7 +15,9 @@ class addUpdate
         $db->startTransaction();
 
         //插入一条软件更新
-        $res = $db->rawQuery('select software_version from ' . $this->table1 . ' where user_id = ? for update', array($user_id))[0]; //加锁
+
+        $db->setQueryOption('FOR UPDATE')->where('user_id', $user_id); //加锁
+        $res = $db->getOne($this->table1, 'software_version');
         $upRet = uploadFile('file');
         $inData = array(
             "user_id" => $user_id,
