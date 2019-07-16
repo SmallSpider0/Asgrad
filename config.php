@@ -25,4 +25,5 @@ $config = array(
         'secretKey' => 'lMhYzRLHFQl_01NfCveXMx6f0FxBiWiISNu3YEa_',
         'bucket' => 'eth-photo',
     ),
+    'hid_types' => array('imei', 'mac'),
 );

@@ -60,19 +60,39 @@ class submitOrder
         //更新user_info表已生成订单数
         $db->rawQuery('update ' . $this->table1 . ' set order_cnt = order_cnt + 1 where `user_id` = ?', [$user_id]);
 
+        //硬件id插入hardware_id表
+        $processed_hid = $this->process_hid($hid_list);
+        if ($processed_hid) {
+            $inData = array();
+            foreach ($processed_hid as $tmp) {
+                foreach ($tmp['data'] as $hid) {
+                    array_push($inData, array($order_num, $tmp['hid_type'], $hid));
+                }
+            }
+        } else {
+            $db->rollback();
+            msg(404, '硬件id格式有误');
+            return;
+        }
+
+        $keys = array("order_num", "type", "data");
+        if (!$db->insertMulti($this->table5, $inData, $keys)) {
+            $db->rollback();
+            msg(402, $db->getLastError());
+            return;
+        }
+
         //测试相关文件存本地磁盘，order_files表
-
-
         //保存文件
         $upload = new \Dj\Upload();
         $filelist = $upload->save('./upload/order_file_upload');
         if (!is_array($filelist)) { //失败
             $error_msg = [-1 => '上传失败', -2 => '文件存储路径不合法', -3 => '上传非法格式文件', -4 => '文件大小不合符规定'];
             $db->rollback();
-            msg(403, $error_msg[$filelist]);
+            msg(403, '测试相关文件上传错误' . $error_msg[$filelist]);
             return;
         }
-        //存入数据库
+        //文件信息存入数据库
         $inData = array();
         if (isset($filelist['name'])) {
             array_push($inData, array($filelist['md5'], $filelist['savename'], $order_num));
@@ -81,7 +101,6 @@ class submitOrder
                 array_push($inData, array($file['md5'], $file['savename'], $order_num));
             }
         }
-
         $keys = array("file_md5", "file_name", "order_num");
         if (!$db->insertMulti($this->table4, $inData, $keys)) {
             $db->rollback();
@@ -89,11 +108,34 @@ class submitOrder
             return;
         }
 
-        //硬件id插入hardware_id表
-        
-
         //--------提交事务-------------
         $db->commit();
         msg(200);
+    }
+
+    //输入字符串形式的hid列表
+    //返回：解析好的数组 或 格式有误无法解析false
+    private function process_hid($hid_list)
+    {
+        global $config;
+        $ret = array();
+        $lists = explode("\n-------\n", $hid_list);
+        foreach ($lists as $list) {
+            $tmp = array();
+            $hids = explode("\n", $list);
+            //类型
+            if (isset($hids[0]) && in_array(strtolower($hids[0]), $config['hid_types'])) {
+                $tmp['hid_type'] = strtolower($hids[0]);
+            } else {
+                return false;
+            }
+            //数量
+            if (!(isset($hids[1]) && is_numeric($hids[1]) && (count($hids) - 2 == $hids[1]))) {
+                return false;
+            }
+            $tmp['data'] = array_slice($hids, 2);
+            array_push($ret, $tmp);
+        }
+        return $ret;
     }
 }
