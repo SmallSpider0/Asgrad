@@ -36,6 +36,7 @@ class getOrderList
             msg(402, $db->getLastError());
             return;
         }
-        msg(200, $res);
+        $ret = build_packed_ret($res);
+        msg(200, $ret);
     }
 }

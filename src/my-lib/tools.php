@@ -311,3 +311,18 @@ function fileDownload($file)
         return false;
     }
 }
+
+function build_packed_ret($res)
+{
+    $ret = array();
+    $ret['keys'] = array_keys($res[0]);
+    $ret['values'] = array();
+    foreach ($res as $v) {
+        $tmp = array();
+        foreach ($ret['keys'] as $k) {
+            array_push($tmp, $v[$k]);
+        }
+        array_push($ret['values'], $tmp);
+    }
+    return $ret;
+}

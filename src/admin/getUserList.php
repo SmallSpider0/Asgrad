@@ -16,11 +16,13 @@ class getUserList
         $db->orderBy('register_time');
 
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page,'user_id, company_name, register_time, order_cnt, software_version');
+        $res = $db->arraybuilder()->paginate($this->table, $page, 'user_id, company_name, register_time, order_cnt, software_version');
         if (!$res) {
             msg(402, $db->getLastError());
             return;
         }
-        msg(200, $res);
+        //构建返回值
+        $ret = build_packed_ret($res);
+        msg(200, $ret);
     }
 }

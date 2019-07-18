@@ -26,6 +26,9 @@ class getCDKList
             msg(402, $db->getLastError());
             return;
         }
-        msg(200, $res);
+
+        //构建返回值
+        $ret = build_packed_ret($res);
+        msg(200, $ret);
     }
 }
