@@ -109,7 +109,7 @@ function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
                     $db->where('id', $id);
                     $db->update($table, $updateData);
                 }
-                return $role;//1 管理员 2 web 3 pc
+                return $role; //1 管理员 2 web 3 pc
             }
         }
     }
@@ -295,4 +295,19 @@ function uploadFile($name)
         'key' => $key,
         'md5' => $md5
     );
+}
+
+function fileDownload($file)
+{
+    if (file_exists($file)) {
+        header("Content-type:application/octet-stream");
+        $filename = basename($file);
+        header("Content-Disposition:attachment;filename = " . $filename);
+        header("Accept-ranges:bytes");
+        header("Accept-length:" . filesize($file));
+        readfile($file);
+        return true;
+    } else {
+        return false;
+    }
 }

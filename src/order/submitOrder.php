@@ -85,7 +85,8 @@ class submitOrder
         //测试相关文件存本地磁盘，order_files表
         //保存文件
         $upload = new \Dj\Upload();
-        $filelist = $upload->save('./upload/order_file_upload');
+        global $config;
+        $filelist = $upload->save('./' . $config['order_files_url']);
         if (!is_array($filelist)) { //失败
             $error_msg = [-1 => '上传失败', -2 => '文件存储路径不合法', -3 => '上传非法格式文件', -4 => '文件大小不合符规定'];
             $db->rollback();

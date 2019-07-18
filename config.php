@@ -26,4 +26,5 @@ $config = array(
         'bucket' => 'eth-photo',
     ),
     'hid_types' => array('imei', 'mac'),
+    'order_files_url' => 'upload/order_file_upload',
 );

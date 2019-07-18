@@ -58,7 +58,7 @@ $input_config = [
             'status' => 'IntGeLe:0,3',
             'order_num' => 'Str',
             'made_in' => 'Str',
-            'date_start	' => 'DateTime',
+            'date_start' => 'DateTime',
             'date_end' => 'DateTime',
         ],
         'getOrderInfo' =>  [
@@ -68,7 +68,7 @@ $input_config = [
         'getOrderHIdList' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
-            'status' => 'Required|IntIn:0,1,2',
+            'status' => 'IntIn:0,1,2',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGe:1',
         ],
@@ -79,6 +79,11 @@ $input_config = [
         'getOrderData' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
+        ],
+        'downloadOrderFile' =>  [
+            'user_id' => 'Required|IntGt:0',
+            'order_num' => 'Required|Str',
+            'file_name' => 'Required|Str',
         ],
     ],
 
