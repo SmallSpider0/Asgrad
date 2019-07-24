@@ -135,7 +135,7 @@ $input_config = [
         'getHardwareId' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
-            'type' => 'IntIn:0,1',
+            'type' => 'StrIn:imei,mac',
         ],
         'confirmHardwareId' =>  [
             'user_id' => 'Required|IntGt:0',
