@@ -27,4 +27,5 @@ $config = array(
     ),
     'hid_types' => array('imei', 'mac'),
     'order_files_url' => 'upload/order_file_upload',
+    'top_issue_update_period' => 360,
 );
