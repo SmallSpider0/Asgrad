@@ -115,13 +115,13 @@ $input_config = [
         'getOrderStat' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
-            'last_timestamp_comp' => 'Required|DateTime',
+            'last_timestamp_comp' => 'DateTime',
         ],
         'getTestStationStat' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
-            'last_timestamp_good' => 'Required|DateTime',
-            'last_timestamp_reject' => 'Required|DateTime',
+            'last_timestamp_good' => 'DateTime',
+            'last_timestamp_reject' => 'DateTime',
         ],
         'getProductStatList' =>  [
             'user_id' => 'Required|IntGt:0',
