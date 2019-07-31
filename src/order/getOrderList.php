@@ -16,6 +16,12 @@ class getOrderList
         if (isset($_POST['order_num'])) {
             $db->where('order_num', $_POST['order_num']);
         } else {
+            if (isset($_POST['product_name'])) {
+                $db->where('product_name', $_POST['product_name']);
+            }
+            if (isset($_POST['product_model'])) {
+                $db->where('product_model', $_POST['product_model']);
+            }
             if (isset($_POST['status'])) {
                 $db->where('status', $_POST['status']);
             }
@@ -36,6 +42,12 @@ class getOrderList
         if (isset($_POST['order_num'])) {
             $db->where('order_num', $_POST['order_num']);
         } else {
+            if (isset($_POST['product_name'])) {
+                $db->where('product_name', $_POST['product_name']);
+            }
+            if (isset($_POST['product_model'])) {
+                $db->where('product_model', $_POST['product_model']);
+            }
             if (isset($_POST['status'])) {
                 $db->where('status', $_POST['status']);
             }
@@ -43,14 +55,14 @@ class getOrderList
                 $db->where('made_in', $_POST['made_in']);
             }
             if (isset($_POST['date_start'])) {
-                $db->where('add_time', $_POST['date_start'], '>');
+                $db->where('plan_online_time', $_POST['date_start'], '>');
             }
             if (isset($_POST['date_end'])) {
-                $db->where('add_time', $_POST['date_end'], '<');
+                $db->where('plan_online_time', $_POST['date_end'], '<');
             }
         }
 
-        $db->orderBy('add_time');
+        $db->orderBy('plan_online_time');
         $db->pageLimit = $pageLimit;
         $res = $db->arraybuilder()->paginate($this->table, $page, 'order_num, status, made_in, product_name, product_model, quantity, complete_quantity, station_cnt, plan_online_time, add_time');
         if (!$res) {

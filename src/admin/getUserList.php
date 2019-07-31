@@ -23,7 +23,7 @@ class getUserList
         $db->orderBy('register_time');
 
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page, 'user_id, company_name, register_time, order_cnt, software_version');
+        $res = $db->arraybuilder()->paginate($this->table, $page, 'user_id, company_name, register_time, grant_time_out, order_cnt, software_version');
         if (!$res) {
             msg(402, $db->getLastError());
             return;
