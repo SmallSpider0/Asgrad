@@ -109,7 +109,8 @@ class addTestLog
                 $updateData1 = array(
                     'status' => 3
                 );
-                if (!$db->update($this->table1, $updateData1)) {
+                $db->where('order_num', $order_num)->where('sn', $sn);
+                if (!$db->update($this->table3, $updateData1)) {
                     $db->rollback();
                     msg(402, $db->getLastError());
                     return;

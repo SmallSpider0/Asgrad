@@ -28,7 +28,7 @@ class confirmHardwareId
         $updateData = array(
             'status' => 2,
         );
-        $db->where('status', 1)->where('id', $id);
+        $db->where('id', $id)->where('status', 1);
         if (!$db->update($this->table2, $updateData)) {
             msg(402, $db->getLastError());
             return;

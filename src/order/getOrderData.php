@@ -21,6 +21,8 @@ class getOrderData
             msg(403, '不合法的调用');
             return;
         }
+
+        $db->where('user_id', $user_id)->where('order_num', $order_num);
         $ret = $db->getOne($this->table1, 'working_procedure, test_seq');
         $db->where('order_num', $order_num);
         $files = $db->get($this->table2, null, 'file_name, file_md5');
