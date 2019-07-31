@@ -312,9 +312,12 @@ function fileDownload($file)
     }
 }
 
-function build_packed_ret($res)
+function build_packed_ret($res, $total = null)
 {
     $ret = array();
+    if ($total) {
+        $ret['total'] = $total;
+    };
     $ret['keys'] = array_keys($res[0]);
     $ret['values'] = array();
     foreach ($res as $v) {

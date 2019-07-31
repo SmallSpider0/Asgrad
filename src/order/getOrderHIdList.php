@@ -20,6 +20,13 @@ class getOrderHIdList
             return;
         }
 
+        //获取总条数
+        $db->where('order_num', $order_num);
+        if (isset($_POST['status'])) {
+            $db->where('status', $_POST['status']);
+        }
+        $total = $db->getValue($this->table2, "count(*)");
+
         //获取硬件id列表
         $db->where('order_num', $order_num);
         if (isset($_POST['status'])) {
@@ -33,7 +40,7 @@ class getOrderHIdList
             return;
         }
         //构建返回值
-        $ret = build_packed_ret($res);
+        $ret = build_packed_ret($res, $total);
         msg(200, $ret);
     }
 }

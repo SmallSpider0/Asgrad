@@ -10,6 +10,13 @@ class getUpdateHisList
         $page = $_POST['page'];
         $pageLimit = $_POST['pageLimit'];
 
+        //获取总条数
+        if (isset($_POST['user_id'])) {
+            $db->where('user_id', $_POST['user_id']);
+        }
+        $total = $db->getValue($this->table, "count(*)");
+
+        //查询
         if (isset($_POST['user_id'])) {
             $db->where('user_id', $_POST['user_id']);
         }
@@ -22,7 +29,7 @@ class getUpdateHisList
             return;
         }
         //构建返回值
-        $ret = build_packed_ret($res);
+        $ret = build_packed_ret($res,$total);
         msg(200, $ret);
     }
 }

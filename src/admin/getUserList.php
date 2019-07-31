@@ -10,6 +10,13 @@ class getUserList
         $page = $_POST['page'];
         $pageLimit = $_POST['pageLimit'];
 
+        //获取总条数
+        if (isset($_POST['company_name'])) {
+            $db->where('company_name', $_POST['company_name']);
+        }
+        $total = $db->getValue($this->table, "count(*)");
+
+        //查询
         if (isset($_POST['company_name'])) {
             $db->where('company_name', $_POST['company_name']);
         }
@@ -22,7 +29,7 @@ class getUserList
             return;
         }
         //构建返回值
-        $ret = build_packed_ret($res);
+        $ret = build_packed_ret($res,$total);
         msg(200, $ret);
     }
 }

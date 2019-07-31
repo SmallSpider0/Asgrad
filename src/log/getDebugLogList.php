@@ -11,6 +11,20 @@ class getDebugLogList
         $page = $_POST['page'];
         $pageLimit = $_POST['pageLimit'];
 
+        //获取总条数
+        $db->where('user_id', $user_id);
+        if (isset($_POST['log_id'])) {
+            $db->where('log_id', $_POST['log_id']);
+        }
+        if (isset($_POST['date_start'])) {
+            $db->where('add_time', $_POST['date_start'], '>');
+        }
+        if (isset($_POST['date_end'])) {
+            $db->where('add_time', $_POST['date_end'], '<');
+        }
+        $total = $db->getValue($this->table, "count(*)");
+
+        //查询
         $db->where('user_id', $user_id);
         if (isset($_POST['log_id'])) {
             $db->where('log_id', $_POST['log_id']);
@@ -31,7 +45,7 @@ class getDebugLogList
         }
 
         //构建返回值
-        $ret = build_packed_ret($res);
+        $ret = build_packed_ret($res,$total);
         msg(200, $ret);
     }
 }
