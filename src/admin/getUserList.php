@@ -2,7 +2,7 @@
 
 class getUserList
 {
-    private $table = "user_info";
+    private $table = "user_info_all";
 
     public function run($ROLE)
     {
