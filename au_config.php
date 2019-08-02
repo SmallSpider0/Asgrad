@@ -4,7 +4,7 @@
 //是否需要授权
 $au_config = [
     //全局开关
-    'global' => false,
+    'global' => true,
 
     //用户模块
     'user' => [
@@ -20,7 +20,7 @@ $au_config = [
     ],
 
     //订单模块
-    'util' => [
+    'order' => [
         'no' => [],
         'yes' => [
             'submitOrder' => [2],
@@ -75,7 +75,7 @@ $au_config = [
         'yes' => [
             'heartBeat' => [1, 2, 3],
             'logout' => [1, 2, 3],
-            'getUpdate' => [1],
+            'getUpdate' => [1, 2, 3],
         ]
     ],
 ];

@@ -11,14 +11,14 @@ class getUpdateHisList
         $pageLimit = $_POST['pageLimit'];
 
         //获取总条数
-        if (isset($_POST['user_id'])) {
-            $db->where('user_id', $_POST['user_id']);
+        if (isset($_POST['user_uid'])) {
+            $db->where('user_id', $_POST['user_uid']);
         }
         $total = $db->getValue($this->table, "count(*)");
 
         //查询
-        if (isset($_POST['user_id'])) {
-            $db->where('user_id', $_POST['user_id']);
+        if (isset($_POST['user_uid'])) {
+            $db->where('user_id', $_POST['user_uid']);
         }
         $db->orderBy('add_time');
 

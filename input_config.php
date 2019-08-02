@@ -201,20 +201,20 @@ $input_config = [
             'company_name' => 'Str',
         ],
         'getUserInfo' =>  [
-            'user_id' => 'Required|IntGe:1',
+            'user_uid' => 'Required|IntGe:1',
         ],
         'editUserInfo' =>  [
-            'user_id' => 'Required|IntGe:1',
+            'user_uid' => 'Required|IntGe:1',
             'grant_time_out' => 'Date',
             'remark' => 'Str',
         ],
         'getUpdateHisList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
-            'user_id' => 'IntGe:1',
+            'user_uid' => 'IntGe:1',
         ],
         'addUpdate' =>  [
-            'user_id' => 'Required|IntGe:1',
+            'user_uid' => 'Required|IntGe:1',
             'description' => 'Required|Str',
             'file' => 'Required|File',
         ],
@@ -229,7 +229,7 @@ $input_config = [
             'user_id' => 'Required|IntGe:1',
         ],
         'getUpdate' =>  [
-            'user_id' => 'Required|IntGe:1',
+            'user_uid' => 'Required|IntGe:1',
             'version' => 'IntGe:1',
         ],
     ],

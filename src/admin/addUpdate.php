@@ -8,7 +8,7 @@ class addUpdate
     public function run($ROLE)
     {
         global $db;
-        $user_id = $_POST['user_id'];
+        $user_id = $_POST['user_uid'];
         $description = $_POST['description'];
 
         //-------------------【事务开始】-------------------

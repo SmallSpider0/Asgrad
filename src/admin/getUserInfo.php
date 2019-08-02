@@ -7,7 +7,7 @@ class getUserInfo
     public function run($ROLE)
     {
         global $db;
-        $user_id = $_POST['user_id'];
+        $user_id = $_POST['user_uid'];
 
         $db->where('user_id', $user_id);
         db_getone($this->table, 'res');
