@@ -78,6 +78,10 @@ $input_config = [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
         ],
+        'setOrderStart' =>  [
+            'user_id' => 'Required|IntGt:0',
+            'order_num' => 'Required|Str',
+        ],
         'getOrderData' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',

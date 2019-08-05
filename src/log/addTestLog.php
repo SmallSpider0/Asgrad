@@ -22,23 +22,16 @@ class addTestLog
         $test_item = $_POST['test_item'];
         $test_log = $_POST['test_log'];
 
-
-        //-------------------【事务开始】-------------------
-        $db->startTransaction();
-
         //-------判断接口调用合法性-------
 
-        $db->setQueryOption('FOR UPDATE'); //加锁
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->table1, 'status, station_cnt, complete_quantity, made_in');
+        $res_orders = $db->getOne($this->table1, 'status, station_cnt, made_in');
         if (!$res_orders) {
             msg(403, '不合法的调用');
-            $db->rollback();
             return;
         }
         if ($res_orders['status'] != 1) {
             msg(403, '不合法的调用');
-            $db->rollback();
             return;
         }
 
@@ -49,19 +42,16 @@ class addTestLog
                 $station_now = $matches;
             } else {
                 msg(400, 'station有误');
-                $db->rollback();
                 return;
             }
         }
         $test_dur = bcsub($end_time, $start_time);
         if (bccomp($test_dur, 0) < 0) {
             msg(400, '测试开始结束时间有误');
-            $db->rollback();
             return;
         }
         if ($station_now[2] > $res_orders['station_cnt']) {
             msg(400, 'station有误');
-            $db->rollback();
             return;
         }
 
@@ -84,10 +74,16 @@ class addTestLog
             $error_code = $_POST['error_code'];
         }
         if (!$db->insert($this->table2, $inData1)) {
-            $db->rollback();
             msg(402, $db->getLastError());
             return;
         }
+        
+        //-------------------【事务开始】-------------------
+        $db->startTransaction();
+
+        $db->setQueryOption('FOR UPDATE'); //加锁
+        $db->where('user_id', $user_id)->where('order_num', $order_num);
+        $res_orders = $db->getOne($this->table1, 'status, station_cnt, complete_quantity, made_in');
 
         //-------查询产品表获取相应信息（并加锁）-------
 
@@ -105,7 +101,15 @@ class addTestLog
 
         if ($station_now[1] == 'RT') { //返修日志
             preg_match('/\D{2}(\d{1,2})/', $res_product['at_station'], $matches);
-            if ($res_product && $res_product['status'] == 2 && $matches[1] == $station_now[2]) { //测试站序号等于返修站序号
+            $tmp = $station_now[2] - $matches[1];
+            $st = $res_product['status'];
+            if (!($st == 2 && $tmp == 0)) { //返修日志必须状态为返修 且和当前所处测试站相同
+                $db->rollback();
+                msg(403, '测试站有误');
+                return;
+            }
+
+            if ($res_product && $res_product['status'] == 2 && $matches[1] == $station_now[2] && $result == 1) { //测试站序号等于返修站序号，结果为成功
                 $updateData1 = array(
                     'status' => 3
                 );
@@ -132,11 +136,11 @@ class addTestLog
 
         //-------FT日志：根据是否为产品首条日志分别处理(插入或更新产品表)-------
         if (!$res_product) { //测试日志 产品信息还未写入数据库
-
+            $test_cnt_now = 1;
             //判断数据正确性
             if ($station_now[2] != 1) { //首个日志的测试站必须为FT1
                 $db->rollback();
-                msg(400, '测试站有误');
+                msg(403, '测试站有误');
                 return;
             }
 
@@ -173,9 +177,9 @@ class addTestLog
             preg_match('/\D{2}(\d{1,2})/', $res_product['at_station'], $matches);
             $tmp = $station_now[2] - $matches[1];
             $st = $res_product['status'];
-            if (($tmp == 0 && ($st == 1 || $st == 3)) || ($tmp == 1 && $st == 0)) { //测试站必须按顺序执行
+            if (!(($tmp == 0 && ($st == 1 || $st == 3)) || ($tmp == 1 && $st == 0))) { //测试站必须按顺序执行
                 $db->rollback();
-                msg(400, '测试站有误');
+                msg(403, '测试站有误');
                 return;
             }
 
@@ -246,6 +250,11 @@ class addTestLog
         $db->where('order_num', $order_num);
         $res_order_info = $db->getOne($this->table6, $sqlstr);
 
+        //构建返回值
+        $data = array(
+            'rt' => 'false'
+        );
+
         //构建更新数据
         $updateData3 = array();
         if ($result == 1) { //成功
@@ -256,15 +265,18 @@ class addTestLog
         } else { //失败
             if ($test_cnt_now == $res_user['retest_times'] + 1) {
                 $updateData3[$reject_cnt] = $res_order_info[$reject_cnt] + 1; //测试站不良品数量
+                $data['rt'] = 'true'; //需要返修
             }
         }
 
         //更新数据库
-        $db->where('order_num', $order_num);
-        if (!$db->update($this->table6, $updateData3)) {
-            $db->rollback();
-            msg(402, $db->getLastError());
-            return;
+        if ($updateData3) {
+            $db->where('order_num', $order_num);
+            if (!$db->update($this->table6, $updateData3)) {
+                $db->rollback();
+                msg(402, $db->getLastError());
+                return;
+            }
         }
 
         //-------更新订单表已完成数量-------
@@ -274,7 +286,7 @@ class addTestLog
                 'complete_quantity' => $res_orders['complete_quantity'] + 1,
             );
             $db->where('user_id', $user_id)->where('order_num', $order_num);
-            if (!$db->update($this->table6, $updateData3)) {
+            if (!$db->update($this->table1, $updateData3)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -283,6 +295,6 @@ class addTestLog
 
         //-------------------【事务结束】-------------------
         $db->commit();
-        msg(200);
+        msg(200, $data);
     }
 }

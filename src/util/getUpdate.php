@@ -16,6 +16,6 @@ class getUpdate
             $db->orderBy('add_time');
         }
 
-        db_getone($this->table, 'res', 'version, description, qiniu_file_name, file_md5, add_time');
+        db_getone($this->table, 'res', '', 'version, description, qiniu_file_name, file_md5, add_time');
     }
 }

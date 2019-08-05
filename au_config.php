@@ -28,6 +28,7 @@ $au_config = [
             'getOrderInfo' => [2],
             'getOrderHIdList' => [2],
             'setOrderComplete' => [2],
+            'setOrderStart' => [2],
             'getOrderData' => [3],
             'downloadOrderFile' => [3],
         ]
