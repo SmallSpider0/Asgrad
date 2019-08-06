@@ -23,7 +23,7 @@ $config = array(
     'qiniu-sdk' => array(
         'accessKey' => 'Mftnw0ULVkfW-iq4pcK7g9wDwJ4MzD5Kq-Y-duD6',
         'secretKey' => 'lMhYzRLHFQl_01NfCveXMx6f0FxBiWiISNu3YEa_',
-        'bucket' => 'eth-photo',
+        'bucket' => 'asgrad_file',
     ),
     'hid_types' => array('imei', 'mac'),
     'order_files_url' => 'upload/order_file_upload',
