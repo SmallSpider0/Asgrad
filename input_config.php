@@ -220,6 +220,7 @@ $input_config = [
         'addUpdate' =>  [
             'user_uid' => 'Required|IntGe:1',
             'description' => 'Required|Str',
+            'version_id' => 'Required|Str',
             'file' => 'Required|File',
         ],
     ],
