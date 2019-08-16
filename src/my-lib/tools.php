@@ -28,6 +28,9 @@ function db_getone($table, $ret = '', $err_ret = '', $cl = '*')
             msg(401, $err_ret);
         }
     } else {
+		if ($ret == 'res') {
+            $ret = $res;
+        }
         msg(200, $ret);
     }
 }
