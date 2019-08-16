@@ -29,7 +29,7 @@ class getUserList
             return;
         }
         //构建返回值
-        $ret = build_packed_ret($res,$total);
+        $ret = build_packed_ret($res, $total);
         msg(200, $ret);
     }
 }

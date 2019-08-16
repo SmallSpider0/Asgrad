@@ -23,7 +23,7 @@ $can_run = false;
 
 
 $role = 0; //角色 默认为无角色 1 管理员 2 web 3 pc
-if (!$au_config['global']) {//全局开关判断
+if (!$au_config['global']) { //全局开关判断
     $can_run = true;
 } else {
     if (in_array($path_pieces[1], $au_config[$path_pieces[0]]['no'])) { //如果不需要授权

@@ -26,6 +26,6 @@ class getProductStatus
 
         //查询
         $db->where('order_num', $order_num)->where('sn', $sn);
-        db_getone($this->table2,'res','','status, at_station');
+        db_getone($this->table2, 'res', '', 'status, at_station');
     }
 }
