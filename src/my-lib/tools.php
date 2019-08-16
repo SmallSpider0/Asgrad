@@ -20,13 +20,15 @@ db_connect();
 function db_getone($table, $ret = '', $err_ret = '', $cl = '*')
 {
     global $db;
-    if ($res = $db->getOne($table, $cl)) {
-        if ($ret == 'res') {
-            $ret = $res;
+    $res = $db->getOne($table, $cl);
+    if (!$res) {
+        if (!$db->getLastError()) {
+            msg(201, "无数据");
+        } else {
+            msg(401, $err_ret);
         }
-        msg(200, $ret);
     } else {
-        msg(401, $err_ret);
+        msg(200, $ret);
     }
 }
 
