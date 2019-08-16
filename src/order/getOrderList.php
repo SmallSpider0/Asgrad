@@ -29,10 +29,10 @@ class getOrderList
                 $db->where('made_in', $_POST['made_in']);
             }
             if (isset($_POST['date_start'])) {
-                $db->where('add_time', $_POST['date_start'], '>');
+                $db->where('plan_online_time', $_POST['date_start'], '>');
             }
             if (isset($_POST['date_end'])) {
-                $db->where('add_time', $_POST['date_end'], '<');
+                $db->where('plan_online_time', $_POST['date_end'], '<');
             }
         }
         $total = $db->getValue($this->table, "count(*)");
