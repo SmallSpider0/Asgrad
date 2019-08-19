@@ -6,7 +6,6 @@ class getUserInfo
 
     public function run($ROLE)
     {
-        echo $ROLE;
         global $db;
         $user_id = $_POST['user_id'];
         $db->where('user_id', $user_id);
