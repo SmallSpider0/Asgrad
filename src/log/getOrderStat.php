@@ -88,7 +88,7 @@ class getOrderStat
         }
 
         $res = $db->get($this->table3, null, "add_time, complete_quantity_" . $res_orders['station_cnt'] . " as complete_quantity");
-        if ($res) {
+        if (isset($res)) {
             $ret['stat_complete_quantity'] = build_packed_ret($res);
         } else {
             $ret['stat_complete_quantity'] = '';
