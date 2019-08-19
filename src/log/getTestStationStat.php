@@ -62,7 +62,7 @@ class getTestStationStat
         }
         $sqlStr = join(", ", $tmp);
         $res = $db->get($this->table5, null, "add_time, $sqlStr");
-        if ($res) {
+        if (isset($res)) {
             $ret['stat_reject_cnt'] = build_packed_ret($res);
         } else {
             $ret['stat_reject_cnt'] = '';
