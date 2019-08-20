@@ -111,7 +111,7 @@ class addTestLog
 
             if ($res_product && $res_product['status'] == 2 && $matches[1] == $station_now[2] && $result == 1) { //测试站序号等于返修站序号，结果为成功
                 $updateData1 = array(
-                    'status' => 3
+                    'status' => 3,
                 );
                 $db->where('order_num', $order_num)->where('sn', $sn);
                 if (!$db->update($this->table3, $updateData1)) {
@@ -207,7 +207,6 @@ class addTestLog
                 $test_time => $res_product[$test_time] . ',' . $test_dur,
             );
 
-
             //更新数据库
             $db->where('order_num', $order_num)->where('sn', $sn);
             if (!$db->update($this->table3, $updateData2)) {
@@ -235,7 +234,7 @@ class addTestLog
         }
 
         //-------更新订单统计表-------
-        //		若日志测试结果为成功，该测试站实际产出+1
+        //        若日志测试结果为成功，该测试站实际产出+1
         //      若日志测试结果为成功，且（当前测试站测试次数=1）则该站首次通过数量+1
         //      若日志测试结果为失败，且 (当前测试站测试次数=测试不良品重测次数+1) 则该站不良品数量+1
 
@@ -252,7 +251,7 @@ class addTestLog
 
         //构建返回值
         $data = array(
-            'rt' => 'false'
+            'rt' => 'false',
         );
 
         //构建更新数据

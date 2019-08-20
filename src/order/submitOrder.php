@@ -26,7 +26,7 @@ class submitOrder
         $db->startTransaction();
 
         //生成订单号
-        $order_num = date('Ymd') . substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        $order_num = date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 
         //插入order表
         $inData = array(

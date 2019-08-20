@@ -16,7 +16,6 @@ class addDebugLog
         $test_item = $_POST['test_item'];
         $test_log = $_POST['test_log'];
 
-
         //插入用户信息表
         $inData = array(
             'user_id' => $user_id,

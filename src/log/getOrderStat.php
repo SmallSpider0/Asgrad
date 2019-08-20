@@ -1,10 +1,10 @@
 <?php
 /*
-	间隔固定时间 轮询调用，同时也可提供刷新按钮 用户手动刷新数据
-	(1)整体直通率，FPY(%)=p1*p2*p3(每一个测试站的首次良率乘积)
-	(2)整体Topissue，数量最多的三类问题，显示发生的测试站别、类型、数量。
-	(3)订单实际产出（折线图）
-*/
+间隔固定时间 轮询调用，同时也可提供刷新按钮 用户手动刷新数据
+(1)整体直通率，FPY(%)=p1*p2*p3(每一个测试站的首次良率乘积)
+(2)整体Topissue，数量最多的三类问题，显示发生的测试站别、类型、数量。
+(3)订单实际产出（折线图）
+ */
 
 class getOrderStat
 {
@@ -46,7 +46,7 @@ class getOrderStat
 
         //计算整体直通率
         $ret['fpy'] = 1;
-        foreach ($res_order_info as  $key => $value) {
+        foreach ($res_order_info as $key => $value) {
             if (!in_array($key, ['top_err_order', 'top_err_order_time', 'top_err_order_end'])) {
                 $ret['fpy'] = $ret['fpy'] * $value / $res_orders['quantity'];
             }

@@ -6,7 +6,6 @@ class heartBeat
     private $table2 = "user_login_web";
     private $table3 = "user_login_pc";
 
-
     public function run($ROLE)
     {
         global $db;
@@ -27,4 +26,5 @@ class heartBeat
         }
         db_update($tb, $updateData);
     }
+    
 }

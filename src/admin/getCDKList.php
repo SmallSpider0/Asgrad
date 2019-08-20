@@ -10,7 +10,7 @@ class getCDKList
         $page = $_POST['page'];
         $pageLimit = $_POST['pageLimit'];
 
-        //获取总条数   
+        //获取总条数
         if (isset($_POST['phone'])) {
             $db->where('phone', $_POST['phone']);
         }

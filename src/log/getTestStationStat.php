@@ -1,12 +1,12 @@
 <?php
 /*
-	间隔固定时间 轮询调用，同时也可提供刷新按钮 用户手动刷新数据
-    (1)各站计划产量 【与订单中的数量字段相同】
-	(2)各站实际产出(达成率)(良品) 【通过该测试站测试的产品数量】（折线图）
-	(3)各站不良品数量(不良率) 【首次超过重测次数进入维修的产品数量】（折线图）
-	(4)各站测试一次通过率FPY(first pass field)(%)(首次良率) 【首次过站直接通过的产品数量】
-	(5)各站最多的不良问题类型Topissue(根据上传日志中的ErrorCode字段统计)，显示类型和数量
-*/
+间隔固定时间 轮询调用，同时也可提供刷新按钮 用户手动刷新数据
+(1)各站计划产量 【与订单中的数量字段相同】
+(2)各站实际产出(达成率)(良品) 【通过该测试站测试的产品数量】（折线图）
+(3)各站不良品数量(不良率) 【首次超过重测次数进入维修的产品数量】（折线图）
+(4)各站测试一次通过率FPY(first pass field)(%)(首次良率) 【首次过站直接通过的产品数量】
+(5)各站最多的不良问题类型Topissue(根据上传日志中的ErrorCode字段统计)，显示类型和数量
+ */
 
 class getTestStationStat
 {
@@ -68,7 +68,6 @@ class getTestStationStat
             $ret['stat_reject_cnt'] = '';
         }
 
-
         //-------查询order_info表获取每个站的FPY-------
 
         //构建查询sql
@@ -86,7 +85,7 @@ class getTestStationStat
 
         //各站直通率
         $ret['fpy_station'] = array();
-        foreach ($res_order_info as  $key => $value) {
+        foreach ($res_order_info as $key => $value) {
             if (!in_array($key, ['top_err_station', 'top_err_station_time', 'top_err_station_end'])) {
                 $ret['fpy_station'][$key] = $value;
             }

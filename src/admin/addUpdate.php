@@ -20,7 +20,6 @@ class addUpdate
         $db->setQueryOption('FOR UPDATE')->where('user_id', $user_id); //加锁
         $res = $db->getOne($this->table1, 'software_version, version_id');
 
-
         //判断版本号是否正确
         if (!$this->chech_version($version_id, $res['version_id'])) {
             $db->rollback();
@@ -65,14 +64,30 @@ class addUpdate
             if (!isset($matches[3]) || !isset($matches_old[3])) {
                 return false;
             }
-            if ($matches[1] > $matches_old[1]) return true;
-            if ($matches[1] < $matches_old[1]) return false;
+            if ($matches[1] > $matches_old[1]) {
+                return true;
+            }
 
-            if ($matches[2] > $matches_old[2]) return true;
-            if ($matches[2] < $matches_old[2]) return false;
+            if ($matches[1] < $matches_old[1]) {
+                return false;
+            }
 
-            if ($matches[3] > $matches_old[3]) return true;
-            if ($matches[3] <= $matches_old[3]) return false;
+            if ($matches[2] > $matches_old[2]) {
+                return true;
+            }
+
+            if ($matches[2] < $matches_old[2]) {
+                return false;
+            }
+
+            if ($matches[3] > $matches_old[3]) {
+                return true;
+            }
+
+            if ($matches[3] <= $matches_old[3]) {
+                return false;
+            }
+
         }
         return false;
     }

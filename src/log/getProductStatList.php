@@ -48,7 +48,6 @@ class getProductStatList
             }
         }
 
-
         //构建查询sql
         $tmp = array();
         for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {

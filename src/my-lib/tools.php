@@ -11,7 +11,7 @@ require_once Root_Path . '/input_config.php';
 require_once Root_Path . '/au_config.php';
 require_once Root_Path . "/vendor/autoload.php";
 
-use WebGeeker\Validation\Validation;
+use Qiniu\Auth;
 
 global $db;
 
@@ -28,7 +28,7 @@ function db_getone($table, $ret = '', $err_ret = '', $cl = '*')
             msg(401, $err_ret);
         }
     } else {
-		if ($ret == 'res') {
+        if ($ret == 'res') {
             $ret = $res;
         }
         msg(200, $ret);
@@ -103,7 +103,10 @@ function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
                 break;
             }
         }
-        if (!$res) return false;
+        if (!$res) {
+            return false;
+        }
+
         if ($res['time_out'] > time() && abs(time() - $timestamp) < $config['security']['token_time_offset']) { //还没过期
             if ($sign == hash_hmac("sha256", $api_key . $timestamp . $url, $res['security_key'])) {
                 //调用接口后 刷新过期时间
@@ -143,7 +146,6 @@ function check_input($path_pieces)
     } else {
         $para = $input_config[$path_pieces[0]][$path_pieces[1]];
     }
-
 
     //输入值判断
     try {
@@ -272,8 +274,8 @@ function hideStr($str)
     return $str;
 }
 
-use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
+use WebGeeker\Validation\Validation;
 
 function uploadFile($name)
 {
@@ -298,7 +300,7 @@ function uploadFile($name)
     //返回
     return array(
         'key' => $key,
-        'md5' => $md5
+        'md5' => $md5,
     );
 }
 
@@ -322,7 +324,8 @@ function build_packed_ret($res, $total = null)
     $ret = array();
     if ($total) {
         $ret['total'] = $total;
-    };
+    }
+    ;
     $ret['keys'] = array_keys($res[0]);
     $ret['values'] = array();
     foreach ($res as $v) {

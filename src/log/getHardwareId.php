@@ -24,7 +24,6 @@ class getHardwareId
             return;
         }
 
-
         //-------------------【事务开始】-------------------
         $db->startTransaction();
 
