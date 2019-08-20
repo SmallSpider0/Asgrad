@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\log;
 
 class GetProductStatList
@@ -50,7 +51,7 @@ class GetProductStatList
         }
 
         //构建查询sql
-        $tmp = array("sn");
+        $tmp = array("sn", "at_station", "status");
         for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
             array_push($tmp, "test_cnt_$i, test_time_$i");
         }
