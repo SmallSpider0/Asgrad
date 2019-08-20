@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\util;
 
-class logout
+class Logout
 {
     private $table1 = "admin_login";
     private $table2 = "user_login_web";

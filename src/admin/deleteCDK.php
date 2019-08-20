@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class deleteCDK
+class DeleteCDK
 {
     private $table = "cd_key";
 

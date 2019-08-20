@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\log;
 
-class confirmHardwareId
+class ConfirmHardwareId
 {
     private $table1 = "orders";
     private $table2 = "hardware_id";

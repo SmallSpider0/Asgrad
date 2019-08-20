@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class setOrderComplete
+class SetOrderComplete
 {
     private $table = "orders";
 

@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class setOrderStart
+class SetOrderStart
 {
     private $table = "orders";
 

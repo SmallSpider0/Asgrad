@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\log;
 
-class getTestLogList
+class GetTestLogList
 {
     private $table = "log_test";
 

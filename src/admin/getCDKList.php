@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class getCDKList
+class GetCDKList
 {
     private $table = "cd_key";
 

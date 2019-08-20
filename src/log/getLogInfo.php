@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\log;
 
-class getLogInfo
+class GetLogInfo
 {
     private $table1 = "log_test";
     private $table2 = "log_debug";

@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class addUpdate
+class AddUpdate
 {
     private $table1 = "user_info";
     private $table2 = "software_update";
@@ -22,7 +22,7 @@ class addUpdate
         $res = $db->getOne($this->table1, 'software_version, version_id');
 
         //判断版本号是否正确
-        if (!$this->chech_version($version_id, $res['version_id'])) {
+        if (!$this->chechVersion($version_id, $res['version_id'])) {
             $db->rollback();
             msg(400, '版本号有误');
             return;
@@ -59,7 +59,7 @@ class addUpdate
         msg(200);
     }
 
-    private function chech_version($v, $old_v)
+    private function chechVersion($v, $old_v)
     {
         if (preg_match('/(\d+)\.(\d+)\.(\d+)/', $v, $matches) && preg_match('/(\d+)\.(\d+)\.(\d+)/', $old_v, $matches_old)) {
             if (!isset($matches[3]) || !isset($matches_old[3])) {

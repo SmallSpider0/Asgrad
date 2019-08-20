@@ -20,7 +20,7 @@ $input_config = [
             'account' => 'Required|Str',
             'passwd' => 'Required|Str',
         ],
-        'getUserInfo' => [
+        'GetUserInfo' => [
             'user_id' => 'Required|IntGt:0',
         ],
         'changeUserInfo' => [
@@ -184,40 +184,40 @@ $input_config = [
             'account' => 'Required|Str',
             'passwd' => 'Required|Str',
         ],
-        'generateCDK' =>  [
+        'GenerateCDK' =>  [
             'phone' => 'Required|Numbers',
             'email' => 'Required|Email',
             'grant_time' => 'Required|IntGe:1',
         ],
-        'deleteCDK' =>  [
+        'DeleteCDK' =>  [
             'id' => 'Required|IntGe:1',
         ],
-        'getCDKList' =>  [
+        'GetCDKList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
             'phone' => 'Numbers',
             'email' => 'Email',
             'status' => 'IntIn:0,1,2',
         ],
-        'getUserList' =>  [
+        'GetUserList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
             'company_name' => 'Str',
         ],
-        'getUserInfo' =>  [
+        'GetUserInfo' =>  [
             'user_uid' => 'Required|IntGe:1',
         ],
-        'editUserInfo' =>  [
+        'EditUserInfo' =>  [
             'user_uid' => 'Required|IntGe:1',
             'grant_time_out' => 'Date',
             'remark' => 'Str',
         ],
-        'getUpdateHisList' =>  [
+        'GetUpdateHisList' =>  [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
             'user_uid' => 'IntGe:1',
         ],
-        'addUpdate' =>  [
+        'AddUpdate' =>  [
             'user_uid' => 'Required|IntGe:1',
             'description' => 'Required|Str',
             'version_id' => 'Required|Str',

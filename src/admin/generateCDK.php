@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class generateCDK
+class GenerateCDK
 {
     private $table = "cd_key";
 

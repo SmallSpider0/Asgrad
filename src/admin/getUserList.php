@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class getUserList
+class GetUserList
 {
     private $table = "user_info_all";
 

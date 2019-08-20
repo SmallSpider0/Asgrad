@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class downloadOrderFile
+class DownloadOrderFile
 {
     private $table1 = "orders";
     private $table2 = "order_files";

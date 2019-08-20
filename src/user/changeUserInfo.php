@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\user;
 
-class changeUserInfo
+class ChangeUserInfo
 {
     private $table = 'user_info';
 

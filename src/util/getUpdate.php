@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\util;
 
-class getUpdate
+class GetUpdate
 {
     private $table = "software_update";
 

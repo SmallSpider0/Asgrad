@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\log;
 
-class getProductStatList
+class GetProductStatList
 {
     private $table1 = "orders";
     private $table2 = "product";

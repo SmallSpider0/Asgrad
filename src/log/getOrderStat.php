@@ -9,7 +9,7 @@ namespace asgrad\log;
 (3)订单实际产出（折线图）
  */
 
-class getOrderStat
+class GetOrderStat
 {
     private $table1 = "orders";
     private $table2 = "order_info";

@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\log;
 
-class getDebugLogList
+class GetDebugLogList
 {
     private $table = "log_debug";
 

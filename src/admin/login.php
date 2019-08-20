@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\admin;
 
-class login
+class Login
 {
     private $table = "admin_login";
 

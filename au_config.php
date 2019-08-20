@@ -9,13 +9,13 @@ $au_config = [
     //用户模块
     'user' => [
         'no' => [
-            'register',
-            'login',
+            'Register',
+            'Login',
         ],
         'yes' => [
-            'getUserInfo' => [2, 3],
-            'changeUserInfo' => [2],
-            'changePasswd' => [2],
+            'GetUserInfo' => [2, 3],
+            'ChangeUserInfo' => [2],
+            'ChangePasswd' => [2],
         ]
     ],
 
@@ -23,14 +23,14 @@ $au_config = [
     'order' => [
         'no' => [],
         'yes' => [
-            'submitOrder' => [2],
-            'getOrderList' => [2],
-            'getOrderInfo' => [2],
-            'getOrderHIdList' => [2],
-            'setOrderComplete' => [2],
-            'setOrderStart' => [2],
-            'getOrderData' => [3],
-            'downloadOrderFile' => [3],
+            'SubmitOrder' => [2],
+            'GetOrderList' => [2],
+            'GetOrderInfo' => [2],
+            'GetOrderHIdList' => [2],
+            'SetOrderComplete' => [2],
+            'SetOrderStart' => [2],
+            'GetOrderData' => [3],
+            'DownloadOrderFile' => [3],
         ]
     ],
 
@@ -38,35 +38,35 @@ $au_config = [
     'log' => [
         'no' => [],
         'yes' => [
-            'getTestLogList' => [2],
-            'getDebugLogList' => [2],
-            'getLogInfo' => [2],
-            'getOrderStat' => [2],
-            'getTestStationStat' => [2],
-            'getProductStatList' => [2],
+            'GetTestLogList' => [2],
+            'GetDebugLogList' => [2],
+            'GetLogInfo' => [2],
+            'GetOrderStat' => [2],
+            'GetTestStationStat' => [2],
+            'GetProductStatList' => [2],
 
-            'getHardwareId' => [3],
-            'confirmHardwareId' => [3],
-            'addTestLog' => [3],
-            'addDebugLog' => [3],
-            'getProductStatus' => [3],
+            'GetHardwareId' => [3],
+            'ConfirmHardwareId' => [3],
+            'AddTestLog' => [3],
+            'AddDebugLog' => [3],
+            'GetProductStatus' => [3],
         ]
     ],
 
     //管理员模块
     'admin' => [
         'no' => [
-            'login'
+            'Login'
         ],
         'yes' => [
-            'generateCDK' => [1],
-            'deleteCDK' => [1],
-            'getCDKList' => [1],
-            'getUserList' => [1],
-            'getUserInfo' => [1],
-            'editUserInfo' => [1],
-            'getUpdateHisList' => [1],
-            'addUpdate' => [1],
+            'GenerateCDK' => [1],
+            'DeleteCDK' => [1],
+            'GetCDKList' => [1],
+            'GetUserList' => [1],
+            'GetUserInfo' => [1],
+            'EditUserInfo' => [1],
+            'GetUpdateHisList' => [1],
+            'AddUpdate' => [1],
         ]
     ],
 
@@ -74,9 +74,9 @@ $au_config = [
     'util' => [
         'no' => [],
         'yes' => [
-            'heartBeat' => [1, 2, 3],
-            'logout' => [1, 2, 3],
-            'getUpdate' => [1, 2, 3],
+            'HeartBeat' => [1, 2, 3],
+            'Logout' => [1, 2, 3],
+            'GetUpdate' => [1, 2, 3],
         ]
     ],
 ];

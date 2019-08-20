@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\user;
 
-class login
+class Login
 {
     private $table1 = "user_login_web";
     private $table2 = "user_login_pc";

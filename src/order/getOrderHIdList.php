@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class getOrderHIdList
+class GetOrderHIdList
 {
     private $table1 = "orders";
     private $table2 = "hardware_id";

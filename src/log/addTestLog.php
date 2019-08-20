@@ -2,7 +2,7 @@
 
 namespace asgrad\log;
 
-class addTestLog
+class AddTestLog
 {
     private $table1 = "orders";
     private $table2 = "log_test";

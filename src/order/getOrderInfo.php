@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class getOrderInfo
+class GetOrderInfo
 {
     private $table = "orders";
 

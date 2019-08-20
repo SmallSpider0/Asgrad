@@ -1,7 +1,7 @@
 <?php
 namespace asgrad\order;
 
-class submitOrder
+class SubmitOrder
 {
     private $table1 = "user_info";
     private $table2 = "orders";
@@ -62,7 +62,7 @@ class submitOrder
         $db->rawQuery('update ' . $this->table1 . ' set order_cnt = order_cnt + 1 where `user_id` = ?', [$user_id]);
 
         //硬件id插入hardware_id表
-        $processed_hid = $this->process_hid($hid_list);
+        $processed_hid = $this->processHid($hid_list);
         if ($processed_hid) {
             $inData = array();
             foreach ($processed_hid as $tmp) {
@@ -117,7 +117,7 @@ class submitOrder
 
     //输入字符串形式的hid列表
     //返回：解析好的数组 或 格式有误无法解析false
-    private function process_hid($hid_list)
+    private function processHid($hid_list)
     {
         global $config;
         $ret = array();

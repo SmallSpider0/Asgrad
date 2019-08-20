@@ -10,7 +10,7 @@ namespace asgrad\log;
 (5)各站最多的不良问题类型Topissue(根据上传日志中的ErrorCode字段统计)，显示类型和数量
  */
 
-class getTestStationStat
+class GetTestStationStat
 {
     private $table1 = "orders";
     private $table2 = "order_info";
