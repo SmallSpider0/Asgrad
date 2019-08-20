@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\log;
 
 /*
@@ -89,7 +90,7 @@ class GetTestStationStat
         $ret['fpy_station'] = array();
         foreach ($res_order_info as $key => $value) {
             if (!in_array($key, ['top_err_station', 'top_err_station_time', 'top_err_station_end'])) {
-                $ret['fpy_station'][$key] = $value;
+                $ret['fpy_station'][$key] = $value / $res_orders['quantity'];
             }
         }
 
@@ -103,11 +104,11 @@ class GetTestStationStat
         if (!$t || ($s == 1 && time() - strtotime($t) >= 60) || ($s > 1 && $e == 0)) { //重新计算
             //计算
             $ret['top_err_station'] = array();
-            for ($i = 1; $i < $res_orders['station_cnt']; $i++) {
+            for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
                 $db->where('order_num', $order_num)->where('station', "FT$i");
                 $db->groupBy('error_code');
                 $db->orderBy('count(*)');
-                $ret['top_err_station']["FT$i"] = json_encode(buildPackedRet($db->get($this->table4, 3, 'error_code, count(*)'), JSON_UNESCAPED_UNICODE));
+                $ret['top_err_station']["FT$i"] = json_encode(buildPackedRet($db->get($this->table4, 3, 'error_code, count(*)')), JSON_UNESCAPED_UNICODE);
             }
 
             //写入
