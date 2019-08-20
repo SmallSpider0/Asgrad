@@ -2,7 +2,7 @@
 
 class generateCDK
 {
-    private $table = "cd_key";
+    private $_table = "cd_key";
 
     public function run($ROLE)
     {
@@ -13,7 +13,7 @@ class generateCDK
         global $db;
         //验证是否存在
         $db->where('phone', $phone)->where('email', $email);
-        $res = $db->getOne($this->table, 'id');
+        $res = $db->getOne($this->_table, 'id');
         if ($res) {
             msg(400, '手机号或邮箱重复');
             return;
@@ -24,6 +24,6 @@ class generateCDK
             "email" => $email,
             "grant_time" => $grant_time,
         );
-        db_insert($this->table, $inData);
+        db_insert($this->_table, $inData);
     }
 }

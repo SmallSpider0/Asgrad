@@ -2,8 +2,8 @@
 
 class changePasswd
 {
-    private $table1 = 'user_login_web';
-    private $table2 = 'user_login_pc';
+    private $_table1 = 'user_login_web';
+    private $_table2 = 'user_login_pc';
 
     public function run($ROLE)
     {
@@ -14,9 +14,9 @@ class changePasswd
         $new_passwd = $_POST['new_passwd'];
 
         if ($mode == 0) {
-            $tb = $this->table1;
+            $tb = $this->_table1;
         } else {
-            $tb = $this->table2;
+            $tb = $this->_table2;
         }
 
         //验证密码正确性

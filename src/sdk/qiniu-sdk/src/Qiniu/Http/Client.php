@@ -148,7 +148,7 @@ final class Client
         $replace = array("\\\\", "\\\"");
         return str_replace($find, $replace, $str);
     }
-    
+
     private static function ucwordsHyphen($str)
     {
         return str_replace('- ', '-', ucwords(str_replace('-', '- ', $str)));

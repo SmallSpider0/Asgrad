@@ -2,8 +2,8 @@
 
 class confirmHardwareId
 {
-    private $table1 = "orders";
-    private $table2 = "hardware_id";
+    private $_table1 = "orders";
+    private $_table2 = "hardware_id";
 
     public function run($ROLE)
     {
@@ -14,7 +14,7 @@ class confirmHardwareId
 
         //订单状态为执行中
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res = $db->getOne($this->table1, 'status');
+        $res = $db->getOne($this->_table1, 'status');
         if (!$res) {
             msg(403, '不合法的调用');
             return;
@@ -29,7 +29,7 @@ class confirmHardwareId
             'status' => 2,
         );
         $db->where('id', $id)->where('status', 1);
-        if (!$db->update($this->table2, $updateData)) {
+        if (!$db->update($this->_table2, $updateData)) {
             msg(402, $db->getLastError());
             return;
         }

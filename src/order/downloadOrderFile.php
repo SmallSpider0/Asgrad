@@ -2,8 +2,8 @@
 
 class downloadOrderFile
 {
-    private $table1 = "orders";
-    private $table2 = "order_files";
+    private $_table1 = "orders";
+    private $_table2 = "order_files";
 
     public function run($ROLE)
     {
@@ -14,7 +14,7 @@ class downloadOrderFile
 
         //判断是否允许下载
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res = $db->getOne($this->table1, 'status');
+        $res = $db->getOne($this->_table1, 'status');
         if (!$res) {
             msg(403, '不合法的调用');
             return;
@@ -24,7 +24,7 @@ class downloadOrderFile
             return;
         }
         $db->where('order_num', $order_num)->where('file_name', $file_name);
-        if (!$db->getOne($this->table2, 'file_name')) {
+        if (!$db->getOne($this->_table2, 'file_name')) {
             msg(403, '不合法的调用');
             return;
         }

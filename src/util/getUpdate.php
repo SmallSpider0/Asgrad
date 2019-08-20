@@ -2,7 +2,7 @@
 
 class getUpdate
 {
-    private $table = "software_update";
+    private $_table = "software_update";
 
     public function run($ROLE)
     {
@@ -16,6 +16,6 @@ class getUpdate
             $db->orderBy('add_time');
         }
 
-        db_getone($this->table, 'res', '', 'version, version_id, description, qiniu_file_name, file_md5, add_time');
+        db_getone($this->_table, 'res', '', 'version, version_id, description, qiniu_file_name, file_md5, add_time');
     }
 }

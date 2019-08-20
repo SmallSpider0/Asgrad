@@ -2,10 +2,10 @@
 
 class register
 {
-    private $table1 = "user_login_web";
-    private $table2 = "user_login_pc";
-    private $table3 = "user_info";
-    private $table4 = "cd_key";
+    private $_table1 = "user_login_web";
+    private $_table2 = "user_login_pc";
+    private $_table3 = "user_info";
+    private $_table4 = "cd_key";
 
     public function run($ROLE)
     {
@@ -21,7 +21,7 @@ class register
 
         //验证是否激活
         $db->where('phone', $phone)->where('email', $email);
-        $res = $db->getOne($this->table4, 'grant_time, status');
+        $res = $db->getOne($this->_table4, 'grant_time, status');
         if (!$res) {
             msg(403, '你的账号还未激活');
             return;
@@ -34,7 +34,7 @@ class register
         $updateData = array(
             'status' => 1,
         );
-        if (!$db->update($this->table4, $updateData)) {
+        if (!$db->update($this->_table4, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;
@@ -43,7 +43,7 @@ class register
 
         //添加用户
         $db->where('phone', $phone)->orWhere('email', $email);
-        $res = $db->getOne($this->table1, 'COUNT(*)');
+        $res = $db->getOne($this->_table1, 'COUNT(*)');
         if ((int) $res['COUNT(*)'] > 0) {
             msg(401, '手机号或邮箱已被使用');
             return;
@@ -58,7 +58,7 @@ class register
                 "salt" => $PSW_web['salt'],
                 "passwd" => $PSW_web['passwd'],
             );
-            $id_web = $db->insert($this->table1, $inData);
+            $id_web = $db->insert($this->_table1, $inData);
             if (!$id_web) {
                 $db->rollback();
                 msg(402, $db->getLastError());
@@ -72,7 +72,7 @@ class register
                 "salt" => $PSW_pc['salt'],
                 "passwd" => $PSW_pc['passwd'],
             );
-            if (!$db->insert($this->table2, $inData)) {
+            if (!$db->insert($this->_table2, $inData)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -84,7 +84,7 @@ class register
             'user_id' => $id_web,
             'company_name' => $company_name,
         );
-        if (!$db->insert($this->table3, $inData)) {
+        if (!$db->insert($this->_table3, $inData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

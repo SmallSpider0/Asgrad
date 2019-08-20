@@ -2,8 +2,8 @@
 
 class getOrderHIdList
 {
-    private $table1 = "orders";
-    private $table2 = "hardware_id";
+    private $_table1 = "orders";
+    private $_table2 = "hardware_id";
 
     public function run($ROLE)
     {
@@ -15,7 +15,7 @@ class getOrderHIdList
 
         //确认订单是该用户的
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        if (!$db->getOne($this->table1, 'order_num')) {
+        if (!$db->getOne($this->_table1, 'order_num')) {
             msg(403, '不合法的调用');
             return;
         }
@@ -25,7 +25,7 @@ class getOrderHIdList
         if (isset($_POST['status'])) {
             $db->where('status', $_POST['status']);
         }
-        $total = $db->getValue($this->table2, "count(*)");
+        $total = $db->getValue($this->_table2, "count(*)");
 
         //获取硬件id列表
         $db->where('order_num', $order_num);
@@ -34,7 +34,7 @@ class getOrderHIdList
         }
 
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table2, $page);
+        $res = $db->arraybuilder()->paginate($this->_table2, $page);
         if (!$res) {
             msg(402, $db->getLastError());
             return;

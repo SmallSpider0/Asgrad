@@ -2,7 +2,7 @@
 
 class setOrderStart
 {
-    private $table = "orders";
+    private $_table = "orders";
 
     public function run($ROLE)
     {
@@ -15,7 +15,7 @@ class setOrderStart
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
         $db->setQueryOption('FOR UPDATE');
-        $res = $db->getOne($this->table, 'status');
+        $res = $db->getOne($this->_table, 'status');
         if (!$res) {
             $db->rollback();
             msg(403, '不合法的调用');
@@ -32,7 +32,7 @@ class setOrderStart
         }
 
         $db->where('order_num', $order_num);
-        if (!$db->update($this->table, $updateData)) {
+        if (!$db->update($this->_table, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

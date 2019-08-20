@@ -2,8 +2,8 @@
 
 class getProductStatus
 {
-    private $table1 = "orders";
-    private $table2 = "product";
+    private $_table1 = "orders";
+    private $_table2 = "product";
 
     public function run($ROLE)
     {
@@ -14,7 +14,7 @@ class getProductStatus
 
         //订单状态为执行中
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res = $db->getOne($this->table1, 'status');
+        $res = $db->getOne($this->_table1, 'status');
         if (!$res) {
             msg(403, '不合法的调用');
             return;
@@ -26,6 +26,6 @@ class getProductStatus
 
         //查询
         $db->where('order_num', $order_num)->where('sn', $sn);
-        db_getone($this->table2, 'res', '', 'status, at_station');
+        db_getone($this->_table2, 'res', '', 'status, at_station');
     }
 }

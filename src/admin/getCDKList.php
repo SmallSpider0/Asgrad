@@ -2,7 +2,7 @@
 
 class getCDKList
 {
-    private $table = "cd_key";
+    private $_table = "cd_key";
 
     public function run($ROLE)
     {
@@ -20,7 +20,7 @@ class getCDKList
         if (isset($_POST['status'])) {
             $db->where('status', $_POST['status']);
         }
-        $total = $db->getValue($this->table, "count(*)");
+        $total = $db->getValue($this->_table, "count(*)");
 
         //查询
         if (isset($_POST['phone'])) {
@@ -34,7 +34,7 @@ class getCDKList
         }
 
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page);
+        $res = $db->arraybuilder()->paginate($this->_table, $page);
         if (!$res) {
             msg(402, $db->getLastError());
             return;

@@ -17,10 +17,10 @@ global $db;
 
 db_connect();
 
-function db_getone($table, $ret = '', $err_ret = '', $cl = '*')
+function db_getone($_table, $ret = '', $err_ret = '', $cl = '*')
 {
     global $db;
-    $res = $db->getOne($table, $cl);
+    $res = $db->getOne($_table, $cl);
     if (!$res) {
         if (!$db->getLastError()) {
             msg(201, "无数据");
@@ -35,10 +35,10 @@ function db_getone($table, $ret = '', $err_ret = '', $cl = '*')
     }
 }
 
-function db_insert($table, $data, $ret = '')
+function db_insert($_table, $data, $ret = '')
 {
     global $db;
-    if ($res = $db->insert($table, $data)) {
+    if ($res = $db->insert($_table, $data)) {
         if ($ret == 'res') {
             $ret = $res;
         }
@@ -48,10 +48,10 @@ function db_insert($table, $data, $ret = '')
     }
 }
 
-function db_update($table, $data, $ret = '')
+function db_update($_table, $data, $ret = '')
 {
     global $db;
-    if ($res = $db->update($table, $data)) {
+    if ($res = $db->update($_table, $data)) {
         if ($ret == 'res') {
             $ret = $res;
         }
@@ -61,10 +61,10 @@ function db_update($table, $data, $ret = '')
     }
 }
 
-function db_delete($table)
+function db_delete($_table)
 {
     global $db;
-    if ($db->delete($table)) {
+    if ($db->delete($_table)) {
         msg(200);
     } else {
         msg(402, $db->getLastError());
@@ -89,16 +89,16 @@ function check_var(&$var, $default = '')
 
 function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
 {
-    $tables = ["admin_login", "user_login_web", "user_login_pc"];
+    $_tables = ["admin_login", "user_login_web", "user_login_pc"];
     global $db;
     global $config;
     if (check_var($id) and check_var($api_key) and check_var($timestamp) and check_var($sign)) {
         //判断调用接口的角色
         foreach ($auth as $value) {
             $db->where('id', $id)->where('api_key', $api_key);
-            $res = $db->getOne($tables[$value - 1], "security_key, time_out");
+            $res = $db->getOne($_tables[$value - 1], "security_key, time_out");
             if ($res) {
-                $table = $tables[$value - 1];
+                $_table = $_tables[$value - 1];
                 $role = $value;
                 break;
             }
@@ -115,7 +115,7 @@ function check_token($id, $api_key, $timestamp, $sign, $url, $auth)
                         "time_out" => time() + 7200, //2小时
                     );
                     $db->where('id', $id);
-                    $db->update($table, $updateData);
+                    $db->update($_table, $updateData);
                 }
                 return $role; //1 管理员 2 web 3 pc
             }

@@ -2,7 +2,7 @@
 
 class getUpdateHisList
 {
-    private $table = "software_update";
+    private $_table = "software_update";
 
     public function run($ROLE)
     {
@@ -14,7 +14,7 @@ class getUpdateHisList
         if (isset($_POST['user_uid'])) {
             $db->where('user_id', $_POST['user_uid']);
         }
-        $total = $db->getValue($this->table, "count(*)");
+        $total = $db->getValue($this->_table, "count(*)");
 
         //查询
         if (isset($_POST['user_uid'])) {
@@ -23,7 +23,7 @@ class getUpdateHisList
         $db->orderBy('add_time');
 
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page);
+        $res = $db->arraybuilder()->paginate($this->_table, $page);
         if (!$res) {
             msg(402, $db->getLastError());
             return;

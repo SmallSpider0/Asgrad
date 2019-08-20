@@ -2,7 +2,7 @@
 
 class changeUserInfo
 {
-    private $table = 'user_info';
+    private $_table = 'user_info';
 
     public function run($ROLE)
     {
@@ -16,7 +16,7 @@ class changeUserInfo
             $updateData['order_close_timeout'] = $_POST['order_close_timeout'];
         }
         $db->where('user_id', $user_id);
-        if (!$db->update($this->table, $updateData)) {
+        if (!$db->update($this->_table, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

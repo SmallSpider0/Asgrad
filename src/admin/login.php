@@ -2,7 +2,7 @@
 
 class login
 {
-    private $table = "admin_login";
+    private $_table = "admin_login";
 
     public function run($ROLE)
     {
@@ -12,13 +12,13 @@ class login
         $passwd = $_POST['passwd'];
 
         $db->where('account', $account);
-        $res = $db->getOne($this->table, 'id, salt, passwd, day_login_err_count');
+        $res = $db->getOne($this->_table, 'id, salt, passwd, day_login_err_count');
 
         //判断连续登陆错误次数
         if ($res['day_login_err_count'] <= $config['security']['login']) {
             //判断密码正确性
             if (pbkdf2('SHA256', $passwd, $res['salt'], 1000, 32) != $res['passwd']) {
-                $db->rawQuery('update ' . $this->table . ' set day_login_err_count = day_login_err_count + 1 where `id` = ?', [$res['id']]);
+                $db->rawQuery('update ' . $this->_table . ' set day_login_err_count = day_login_err_count + 1 where `id` = ?', [$res['id']]);
                 msg(401, '账号或密码错误');
             } else {
                 //开始事务
@@ -33,7 +33,7 @@ class login
                     "day_login_err_count" => 0,
                 );
                 $db->where('id', $res['id']);
-                if (!$db->update($this->table, $updateData)) {
+                if (!$db->update($this->_table, $updateData)) {
                     $db->rollback();
                     msg(402, $db->getLastError());
                     return;

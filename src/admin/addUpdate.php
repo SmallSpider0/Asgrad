@@ -2,8 +2,8 @@
 
 class addUpdate
 {
-    private $table1 = "user_info";
-    private $table2 = "software_update";
+    private $_table1 = "user_info";
+    private $_table2 = "software_update";
 
     public function run($ROLE)
     {
@@ -18,7 +18,7 @@ class addUpdate
         //插入一条软件更新
 
         $db->setQueryOption('FOR UPDATE')->where('user_id', $user_id); //加锁
-        $res = $db->getOne($this->table1, 'software_version, version_id');
+        $res = $db->getOne($this->_table1, 'software_version, version_id');
 
         //判断版本号是否正确
         if (!$this->chech_version($version_id, $res['version_id'])) {
@@ -35,7 +35,7 @@ class addUpdate
             "qiniu_file_name" => $upRet['key'],
             "file_md5" => $upRet['md5'],
         );
-        if (!$db->insert($this->table2, $inData)) {
+        if (!$db->insert($this->_table2, $inData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;
@@ -47,7 +47,7 @@ class addUpdate
             'software_version' => $res['software_version'] + 1,
             "version_id" => $version_id,
         );
-        if (!$db->update($this->table1, $updateData)) {
+        if (!$db->update($this->_table1, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

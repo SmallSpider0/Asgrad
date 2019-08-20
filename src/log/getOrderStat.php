@@ -8,10 +8,10 @@
 
 class getOrderStat
 {
-    private $table1 = "orders";
-    private $table2 = "order_info";
-    private $table3 = "stat_complete_quantity";
-    private $table4 = "error_code";
+    private $_table1 = "orders";
+    private $_table2 = "order_info";
+    private $_table3 = "stat_complete_quantity";
+    private $_table4 = "error_code";
 
     public function run($ROLE)
     {
@@ -23,7 +23,7 @@ class getOrderStat
         //-------查询order表获取测试站数量，产品数量和判断调用合法性-------
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->table1, 'station_cnt, quantity, status');
+        $res_orders = $db->getOne($this->_table1, 'station_cnt, quantity, status');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
@@ -38,7 +38,7 @@ class getOrderStat
         }
         $sqlStr = join(", ", $tmp);
         $db->where('order_num', $order_num);
-        $res_order_info = $db->getOne($this->table2, $sqlStr . ', top_err_order, top_err_order_time, top_err_order_end');
+        $res_order_info = $db->getOne($this->_table2, $sqlStr . ', top_err_order, top_err_order_time, top_err_order_end');
         if (!$res_order_info) {
             msg(402, $db->getLastError());
             return;
@@ -63,7 +63,7 @@ class getOrderStat
             $db->where('order_num', $order_num);
             $db->groupBy('station, error_code');
             $db->orderBy('count(*)');
-            $ret['top_err_order'] = json_encode(build_packed_ret($db->get($this->table4, 3, 'station, error_code, count(*)'), JSON_UNESCAPED_UNICODE));
+            $ret['top_err_order'] = json_encode(build_packed_ret($db->get($this->_table4, 3, 'station, error_code, count(*)'), JSON_UNESCAPED_UNICODE));
             //写入
             $updateData = array(
                 'top_err_order' => $ret['top_err_order'],
@@ -73,7 +73,7 @@ class getOrderStat
                 $updateData['top_err_order_end'] = 1;
             }
             $db->where('order_num', $order_num);
-            if (!$db->update($this->table2, $updateData)) {
+            if (!$db->update($this->_table2, $updateData)) {
                 msg(402, $db->getLastError());
                 return;
             }
@@ -87,7 +87,7 @@ class getOrderStat
             $db->where('add_time', $_POST['last_timestamp_comp'], '>');
         }
 
-        $res = $db->get($this->table3, null, "add_time, complete_quantity_" . $res_orders['station_cnt'] . " as complete_quantity");
+        $res = $db->get($this->_table3, null, "add_time, complete_quantity_" . $res_orders['station_cnt'] . " as complete_quantity");
         if (isset($res)) {
             $ret['stat_complete_quantity'] = build_packed_ret($res);
         } else {

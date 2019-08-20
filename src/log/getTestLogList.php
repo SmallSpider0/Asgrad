@@ -2,7 +2,7 @@
 
 class getTestLogList
 {
-    private $table = "log_test";
+    private $_table = "log_test";
 
     public function run($ROLE)
     {
@@ -28,7 +28,7 @@ class getTestLogList
         if (isset($_POST['date_end'])) {
             $db->where('add_time', $_POST['date_end'], '<');
         }
-        $total = $db->getValue($this->table, "count(*)");
+        $total = $db->getValue($this->_table, "count(*)");
 
         //查询
         $db->where('user_id', $user_id);
@@ -50,7 +50,7 @@ class getTestLogList
 
         $db->orderBy('add_time');
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page, 'id, order_num, sn, station, made_in, result, error_code, start_time, end_time, add_time');
+        $res = $db->arraybuilder()->paginate($this->_table, $page, 'id, order_num, sn, station, made_in, result, error_code, start_time, end_time, add_time');
         if (!$res) {
             msg(402, $db->getLastError());
             return;
