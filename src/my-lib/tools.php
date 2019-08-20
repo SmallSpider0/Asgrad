@@ -1,4 +1,5 @@
 <?php
+
 // 制定允许其他域名访问
 header("Access-Control-Allow-Origin:*");
 // 响应类型
@@ -11,7 +12,7 @@ require_once Root_Path . '/input_config.php';
 require_once Root_Path . '/au_config.php';
 require_once Root_Path . "/vendor/autoload.php";
 
-use Qiniu\Auth;
+
 
 global $db;
 
@@ -133,9 +134,9 @@ function msg($code, $msg = 'success')
     echo json_encode($arr, JSON_UNESCAPED_UNICODE);
 }
 
+use WebGeeker\Validation\Validation;
 function check_input($path_pieces)
 {
-
     if (count($path_pieces) > 2) {
         return 'url error';
     }
@@ -274,9 +275,9 @@ function hideStr($str)
     return $str;
 }
 
-use Qiniu\Storage\UploadManager;
-use WebGeeker\Validation\Validation;
 
+use Qiniu\Storage\UploadManager;
+use Qiniu\Auth;
 function uploadFile($name)
 {
     global $config;

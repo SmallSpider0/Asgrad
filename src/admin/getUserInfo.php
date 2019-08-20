@@ -1,4 +1,5 @@
 <?php
+namespace asgrad\admin;
 
 class getUserInfo
 {

@@ -1,4 +1,5 @@
 <?php
+namespace asgrad\util;
 
 class logout
 {

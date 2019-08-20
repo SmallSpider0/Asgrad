@@ -1,4 +1,5 @@
 <?php
+namespace asgrad\order;
 
 class downloadOrderFile
 {

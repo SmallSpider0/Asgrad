@@ -39,7 +39,8 @@ if (!$au_config['global']) { //全局开关判断
 //如果允许执行
 $class = $path_pieces[1];
 if ($can_run) {
-    require_once "src/" . $path . ".php";
+    include_once "src/" . $path . ".php";
+    $class = '\\asgrad\\' . preg_replace('/\//', '\\', $path);
     $o = new $class();
     $o->run($role);
 } else {
