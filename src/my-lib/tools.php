@@ -203,6 +203,7 @@ function msg($code, $msg = 'success')
 }
 
 use WebGeeker\Validation\Validation;
+
 /**
  * 输入值校验
  *
@@ -445,6 +446,9 @@ function fileDownload($file)
  */
 function buildPackedRet($res, $total = null)
 {
+    if (count($res) == 0) {
+        return '';
+    }
     $ret = array();
     if ($total) {
         $ret['total'] = $total;
