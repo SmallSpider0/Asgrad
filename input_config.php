@@ -14,7 +14,7 @@ $input_config = [
             'passwd_web' => 'Required|Str',
             'passwd_pc' => 'Required|Str',
         ],
-        'Rogin' =>  [
+        'Login' =>  [
             'mode1' => 'Required|IntIn:0,1',
             'mode2' => 'Required|IntIn:0,1',
             'account' => 'Required|Str',
@@ -23,12 +23,12 @@ $input_config = [
         'GetUserInfo' => [
             'user_id' => 'Required|IntGt:0',
         ],
-        'RhangeUserInfo' => [
+        'ChangeUserInfo' => [
             'user_id' => 'Required|IntGt:0',
             'retest_times' => 'IntGeLe:0,10',
             'order_close_timeout' => 'IntGeLe:1,360',
         ],
-        'RhangePasswd' => [
+        'ChangePasswd' => [
             'mode' => 'Required|IntIn:0,1',
             'user_id' => 'Required|IntGt:0',
             'old_passwd' => 'Required|Str',
