@@ -1,6 +1,6 @@
 <?php
 //error_reporting(E_ALL || ~E_NOTICE);
-define('Root_Path', dirname(__FILE__));
+define('ROOT_PATH', dirname(__FILE__));
 
 require_once "src/my-lib/tools.php";
 
@@ -8,6 +8,10 @@ require_once "src/my-lib/tools.php";
 
 $path = $_SERVER["QUERY_STRING"];
 $path_pieces = explode("/", $path);
+
+if (isset($path_pieces[1])) {
+    $path_pieces[1] = ucfirst($path_pieces[1]);
+}
 
 
 //输入值判断
@@ -38,7 +42,7 @@ if (!$au_config['global']) { //全局开关判断
 
 //如果允许执行
 if ($can_run) {
-    include_once "src/" . $path . ".php";
+    include_once "src/" . $path_pieces[0] . '/' . ucfirst($path_pieces[1]) . ".php";
     $class = '\\asgrad\\' . $path_pieces[0] . '\\' . $path_pieces[1];
     $o = new $class();
     $o->run($role);

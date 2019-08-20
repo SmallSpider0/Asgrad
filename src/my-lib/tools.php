@@ -7,10 +7,10 @@ header('Access-Control-Allow-Methods:POST');
 // 响应头设置
 header('Access-Control-Allow-Headers:x-requested-with, content-type');
 
-require_once Root_Path . '/config.php';
-require_once Root_Path . '/input_config.php';
-require_once Root_Path . '/au_config.php';
-require_once Root_Path . "/vendor/autoload.php";
+require_once ROOT_PATH . '/config.php';
+require_once ROOT_PATH . '/input_config.php';
+require_once ROOT_PATH . '/au_config.php';
+require_once ROOT_PATH . "/vendor/autoload.php";
 
 
 

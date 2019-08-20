@@ -7,14 +7,14 @@
 $input_config = [
     //用户模块
     'user' => [
-        'register' => [
+        'Register' => [
             'phone' => 'Required|Numbers',
             'email' => 'Required|Email',
             'company_name' => 'Required|Str',
             'passwd_web' => 'Required|Str',
             'passwd_pc' => 'Required|Str',
         ],
-        'login' =>  [
+        'Rogin' =>  [
             'mode1' => 'Required|IntIn:0,1',
             'mode2' => 'Required|IntIn:0,1',
             'account' => 'Required|Str',
@@ -23,12 +23,12 @@ $input_config = [
         'GetUserInfo' => [
             'user_id' => 'Required|IntGt:0',
         ],
-        'changeUserInfo' => [
+        'RhangeUserInfo' => [
             'user_id' => 'Required|IntGt:0',
             'retest_times' => 'IntGeLe:0,10',
             'order_close_timeout' => 'IntGeLe:1,360',
         ],
-        'changePasswd' => [
+        'RhangePasswd' => [
             'mode' => 'Required|IntIn:0,1',
             'user_id' => 'Required|IntGt:0',
             'old_passwd' => 'Required|Str',
@@ -38,7 +38,7 @@ $input_config = [
 
     //订单模块
     'order' => [
-        'submitOrder' =>  [
+        'SubmitOrder' =>  [
             'user_id' => 'Required|IntGt:0',
             'made_in' => 'Required|Str',
             'product_name' => 'Required|Str',
@@ -51,7 +51,7 @@ $input_config = [
             'hid_list' => 'Required',
             'file' => 'Required|File',
         ],
-        'getOrderList' =>  [
+        'GetOrderList' =>  [
             'user_id' => 'Required|IntGt:0',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
@@ -63,30 +63,30 @@ $input_config = [
             'date_start' => 'DateTime',
             'date_end' => 'DateTime',
         ],
-        'getOrderInfo' =>  [
+        'GetOrderInfo' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
         ],
-        'getOrderHIdList' =>  [
+        'GetOrderHIdList' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'status' => 'IntIn:0,1,2',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGe:1',
         ],
-        'setOrderComplete' =>  [
+        'SetOrderComplete' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
         ],
-        'setOrderStart' =>  [
+        'SetOrderStart' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
         ],
-        'getOrderData' =>  [
+        'GetOrderData' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
         ],
-        'downloadOrderFile' =>  [
+        'DownloadOrderFile' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'file_name' => 'Required|Str',
@@ -95,7 +95,7 @@ $input_config = [
 
     //日志模块
     'log' => [
-        'getTestLogList' =>  [
+        'GetTestLogList' =>  [
             'user_id' => 'Required|IntGt:0',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
@@ -105,7 +105,7 @@ $input_config = [
             'date_start' => 'DateTime',
             'date_end' => 'DateTime',
         ],
-        'getDebugLogList' =>  [
+        'GetDebugLogList' =>  [
             'user_id' => 'Required|IntGt:0',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
@@ -113,23 +113,23 @@ $input_config = [
             'date_start' => 'DateTime',
             'date_end' => 'DateTime',
         ],
-        'getLogInfo' =>  [
+        'GetLogInfo' =>  [
             'user_id' => 'Required|IntGt:0',
             'mode' => 'Required|IntIn:0,1',
             'id' => 'Required|IntGe:1',
         ],
-        'getOrderStat' =>  [
+        'GetOrderStat' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'last_timestamp_comp' => 'DateTime',
         ],
-        'getTestStationStat' =>  [
+        'GetTestStationStat' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'last_timestamp_good' => 'DateTime',
             'last_timestamp_reject' => 'DateTime',
         ],
-        'getProductStatList' =>  [
+        'GetProductStatList' =>  [
             'user_id' => 'Required|IntGt:0',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGeLe:1,100',
@@ -138,17 +138,17 @@ $input_config = [
             'at_station' => 'Str',
             'status' => 'IntGeLe:0,3',
         ],
-        'getHardwareId' =>  [
+        'GetHardwareId' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'type' => 'StrIn:imei,mac',
         ],
-        'confirmHardwareId' =>  [
+        'ConfirmHardwareId' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'id' => 'Required|IntGe:1',
         ],
-        'addTestLog' =>  [
+        'AddTestLog' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'sn' => 'Required|Str',
@@ -160,7 +160,7 @@ $input_config = [
             'test_item' => 'Required',
             'test_log' => 'Required',
         ],
-        'addDebugLog' =>  [
+        'AddDebugLog' =>  [
             'user_id' => 'Required|IntGt:0',
             'log_id' => 'Required|Str',
             'station' => 'Required|Str',
@@ -171,7 +171,7 @@ $input_config = [
             'test_item' => 'Required',
             'test_log' => 'Required',
         ],
-        'getProductStatus' =>  [
+        'GetProductStatus' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'sn' => 'Required|Str',
@@ -180,7 +180,7 @@ $input_config = [
 
     //管理员模块
     'admin' => [
-        'login' =>  [
+        'Login' =>  [
             'account' => 'Required|Str',
             'passwd' => 'Required|Str',
         ],
@@ -227,13 +227,13 @@ $input_config = [
 
     //通用模块
     'util' => [
-        'heartBeat' =>  [
+        'HeartBeat' =>  [
             'user_id' => 'Required|IntGe:1',
         ],
-        'logout' =>  [
+        'Logout' =>  [
             'user_id' => 'Required|IntGe:1',
         ],
-        'getUpdate' =>  [
+        'GetUpdate' =>  [
             'user_uid' => 'Required|IntGe:1',
             'version' => 'IntGe:1',
         ],
