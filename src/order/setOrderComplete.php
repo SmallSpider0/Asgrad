@@ -3,7 +3,7 @@ namespace asgrad\order;
 
 class setOrderComplete
 {
-    private $_table = "orders";
+    private $table = "orders";
 
     public function run($ROLE)
     {
@@ -16,7 +16,7 @@ class setOrderComplete
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
         $db->setQueryOption('FOR UPDATE');
-        $res = $db->getOne($this->_table, 'status');
+        $res = $db->getOne($this->table, 'status');
         if (!$res) {
             $db->rollback();
             msg(403, '不合法的调用');
@@ -37,7 +37,7 @@ class setOrderComplete
         }
 
         $db->where('order_num', $order_num);
-        if (!$db->update($this->_table, $updateData)) {
+        if (!$db->update($this->table, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

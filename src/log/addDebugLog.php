@@ -3,7 +3,7 @@ namespace asgrad\log;
 
 class addDebugLog
 {
-    private $_table = "log_debug";
+    private $table = "log_debug";
 
     public function run($ROLE)
     {
@@ -34,7 +34,7 @@ class addDebugLog
             $inData['error_code'] = $_POST['error_code'];
         }
 
-        if (!$db->insert($this->_table, $inData)) {
+        if (!$db->insert($this->table, $inData)) {
             msg(402, $db->getLastError());
             return;
         }

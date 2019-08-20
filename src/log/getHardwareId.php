@@ -3,8 +3,8 @@ namespace asgrad\log;
 
 class getHardwareId
 {
-    private $_table1 = "orders";
-    private $_table2 = "hardware_id";
+    private $table1 = "orders";
+    private $table2 = "hardware_id";
 
     public function run($ROLE)
     {
@@ -15,7 +15,7 @@ class getHardwareId
 
         //订单状态为执行中
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res = $db->getOne($this->_table1, 'status');
+        $res = $db->getOne($this->table1, 'status');
         if (!$res) {
             msg(403, '不合法的调用');
             return;
@@ -30,7 +30,7 @@ class getHardwareId
 
         //加锁
         $db->setQueryOption('FOR UPDATE')->where('status', 0)->where('type', $type);
-        $res = $db->getOne($this->_table2, 'id, data');
+        $res = $db->getOne($this->table2, 'id, data');
         if (!$res) {
             msg(404, '硬件id不足');
             $db->rollback();
@@ -43,7 +43,7 @@ class getHardwareId
             'grant_time' => date('Y-m-d H:i:s'),
         );
         $db->where('id', $res['id']);
-        if (!$db->update($this->_table2, $updateData)) {
+        if (!$db->update($this->table2, $updateData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

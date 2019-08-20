@@ -1,14 +1,15 @@
 <?php
+
 namespace asgrad\log;
 
 class addTestLog
 {
-    private $_table1 = "orders";
-    private $_table2 = "log_test";
-    private $_table3 = "product";
-    private $_table4 = "user_info";
-    private $_table5 = "error_code";
-    private $_table6 = "order_info";
+    private $table1 = "orders";
+    private $table2 = "log_test";
+    private $table3 = "product";
+    private $table4 = "user_info";
+    private $table5 = "error_code";
+    private $table6 = "order_info";
 
     public function run($ROLE)
     {
@@ -26,7 +27,7 @@ class addTestLog
         //-------判断接口调用合法性-------
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->_table1, 'status, station_cnt, made_in');
+        $res_orders = $db->getOne($this->table1, 'status, station_cnt, made_in');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
@@ -74,7 +75,7 @@ class addTestLog
             $inData1['error_code'] = $_POST['error_code'];
             $error_code = $_POST['error_code'];
         }
-        if (!$db->insert($this->_table2, $inData1)) {
+        if (!$db->insert($this->table2, $inData1)) {
             msg(402, $db->getLastError());
             return;
         }
@@ -84,7 +85,7 @@ class addTestLog
 
         $db->setQueryOption('FOR UPDATE'); //加锁
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->_table1, 'status, station_cnt, complete_quantity, made_in');
+        $res_orders = $db->getOne($this->table1, 'status, station_cnt, complete_quantity, made_in');
 
         //-------查询产品表获取相应信息（并加锁）-------
 
@@ -96,7 +97,7 @@ class addTestLog
         }
         $db->setQueryOption('FOR UPDATE'); //加锁
         $db->where('order_num', $order_num)->where('sn', $sn);
-        $res_product = $db->getOne($this->_table3, 'status, at_station' . $sqlstr);
+        $res_product = $db->getOne($this->table3, 'status, at_station' . $sqlstr);
 
         //-------RT日志：若目前状态为返修中，且日志为该测试站对应返修站的测试成功日志，则更新【产品表】产品状态为返修待复测，否则不更新。结束-------
 
@@ -115,7 +116,7 @@ class addTestLog
                     'status' => 3,
                 );
                 $db->where('order_num', $order_num)->where('sn', $sn);
-                if (!$db->update($this->_table3, $updateData1)) {
+                if (!$db->update($this->table3, $updateData1)) {
                     $db->rollback();
                     msg(402, $db->getLastError());
                     return;
@@ -128,7 +129,7 @@ class addTestLog
 
         //获取该用户不良品重测次数
         $db->where('user_id', $user_id);
-        $res_user = $db->getOne($this->_table4, 'retest_times');
+        $res_user = $db->getOne($this->table4, 'retest_times');
         if (!$res_user) {
             $db->rollback();
             msg(402, $db->getLastError());
@@ -167,13 +168,12 @@ class addTestLog
             );
 
             //插入数据库
-            if (!$db->insert($this->_table3, $inData2)) {
+            if (!$db->insert($this->table3, $inData2)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
             }
         } else { //更新
-
             //判断数据正确性
             preg_match('/\D{2}(\d{1,2})/', $res_product['at_station'], $matches);
             $tmp = $station_now[2] - $matches[1];
@@ -205,12 +205,12 @@ class addTestLog
                 'at_station' => $station,
                 'status' => $status,
                 $test_cnt => $test_cnt_now,
-                $test_time => $res_product[$test_time] . ',' . $test_dur,
+                $test_time => isset($res_product[$test_time]) ? $res_product[$test_time] . ',' . $test_dur : $test_dur,
             );
 
             //更新数据库
             $db->where('order_num', $order_num)->where('sn', $sn);
-            if (!$db->update($this->_table3, $updateData2)) {
+            if (!$db->update($this->table3, $updateData2)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -227,7 +227,7 @@ class addTestLog
                 'error_code' => $error_code,
             );
             //插入数据库
-            if (!$db->insert($this->_table5, $inData3)) {
+            if (!$db->insert($this->table5, $inData3)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -248,7 +248,7 @@ class addTestLog
         //查询
         $db->setQueryOption('FOR UPDATE'); //加锁
         $db->where('order_num', $order_num);
-        $res_order_info = $db->getOne($this->_table6, $sqlstr);
+        $res_order_info = $db->getOne($this->table6, $sqlstr);
 
         //构建返回值
         $data = array(
@@ -272,7 +272,7 @@ class addTestLog
         //更新数据库
         if ($updateData3) {
             $db->where('order_num', $order_num);
-            if (!$db->update($this->_table6, $updateData3)) {
+            if (!$db->update($this->table6, $updateData3)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -286,7 +286,7 @@ class addTestLog
                 'complete_quantity' => $res_orders['complete_quantity'] + 1,
             );
             $db->where('user_id', $user_id)->where('order_num', $order_num);
-            if (!$db->update($this->_table1, $updateData3)) {
+            if (!$db->update($this->table1, $updateData3)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;

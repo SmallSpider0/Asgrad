@@ -3,11 +3,11 @@ namespace asgrad\order;
 
 class submitOrder
 {
-    private $_table1 = "user_info";
-    private $_table2 = "orders";
-    private $_table3 = "order_info";
-    private $_table4 = "order_files";
-    private $_table5 = "hardware_id";
+    private $table1 = "user_info";
+    private $table2 = "orders";
+    private $table3 = "order_info";
+    private $table4 = "order_files";
+    private $table5 = "hardware_id";
 
     public function run($ROLE)
     {
@@ -42,7 +42,7 @@ class submitOrder
             'working_procedure' => $working_procedure,
             'test_seq' => $test_seq,
         );
-        if (!$db->insert($this->_table2, $inData)) {
+        if (!$db->insert($this->table2, $inData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;
@@ -52,14 +52,14 @@ class submitOrder
         $inData = array(
             'order_num' => $order_num,
         );
-        if (!$db->insert($this->_table3, $inData)) {
+        if (!$db->insert($this->table3, $inData)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;
         }
 
         //更新user_info表已生成订单数
-        $db->rawQuery('update ' . $this->_table1 . ' set order_cnt = order_cnt + 1 where `user_id` = ?', [$user_id]);
+        $db->rawQuery('update ' . $this->table1 . ' set order_cnt = order_cnt + 1 where `user_id` = ?', [$user_id]);
 
         //硬件id插入hardware_id表
         $processed_hid = $this->process_hid($hid_list);
@@ -77,7 +77,7 @@ class submitOrder
         }
 
         $keys = array("order_num", "type", "data");
-        if (!$db->insertMulti($this->_table5, $inData, $keys)) {
+        if (!$db->insertMulti($this->table5, $inData, $keys)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;
@@ -104,7 +104,7 @@ class submitOrder
             }
         }
         $keys = array("file_md5", "file_name", "order_num");
-        if (!$db->insertMulti($this->_table4, $inData, $keys)) {
+        if (!$db->insertMulti($this->table4, $inData, $keys)) {
             $db->rollback();
             msg(402, $db->getLastError());
             return;

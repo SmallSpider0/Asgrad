@@ -3,7 +3,7 @@ namespace asgrad\admin;
 
 class deleteCDK
 {
-    private $_table = "cd_key";
+    private $table = "cd_key";
 
     public function run($ROLE)
     {
@@ -14,13 +14,13 @@ class deleteCDK
         $db->startTransaction();
 
         $db->setQueryOption('FOR UPDATE')->where('id', $id); //加锁
-        $res = $db->getOne($this->_table, 'status');
+        $res = $db->getOne($this->table, 'status');
         if (isset($res['status']) && $res['status'] == 0) {
             $updateData = array(
                 "status" => 2,
             );
             $db->where('id', $id);
-            if (!$db->update($this->_table, $updateData)) {
+            if (!$db->update($this->table, $updateData)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;

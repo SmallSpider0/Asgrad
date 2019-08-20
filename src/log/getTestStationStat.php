@@ -12,11 +12,11 @@ namespace asgrad\log;
 
 class getTestStationStat
 {
-    private $_table1 = "orders";
-    private $_table2 = "order_info";
-    private $_table3 = "stat_complete_quantity";
-    private $_table4 = "error_code";
-    private $_table5 = "stat_reject_cnt";
+    private $table1 = "orders";
+    private $table2 = "order_info";
+    private $table3 = "stat_complete_quantity";
+    private $table4 = "error_code";
+    private $table5 = "stat_reject_cnt";
 
     public function run($ROLE)
     {
@@ -28,7 +28,7 @@ class getTestStationStat
         //-------查询order表获取测试站数量，产品数量和判断调用合法性-------
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->_table1, 'station_cnt, quantity, status');
+        $res_orders = $db->getOne($this->table1, 'station_cnt, quantity, status');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
@@ -45,9 +45,9 @@ class getTestStationStat
             array_push($tmp, "complete_quantity_$i");
         }
         $sqlStr = join(", ", $tmp);
-        $res = $db->get($this->_table3, null, "add_time, $sqlStr");
+        $res = $db->get($this->table3, null, "add_time, $sqlStr");
         if ($res) {
-            $ret['stat_complete_quantity'] = build_packed_ret($res);
+            $ret['stat_complete_quantity'] = buildPackedRet($res);
         } else {
             $ret['stat_complete_quantity'] = '';
         }
@@ -63,9 +63,9 @@ class getTestStationStat
             array_push($tmp, "reject_cnt_$i");
         }
         $sqlStr = join(", ", $tmp);
-        $res = $db->get($this->_table5, null, "add_time, $sqlStr");
+        $res = $db->get($this->table5, null, "add_time, $sqlStr");
         if (isset($res)) {
-            $ret['stat_reject_cnt'] = build_packed_ret($res);
+            $ret['stat_reject_cnt'] = buildPackedRet($res);
         } else {
             $ret['stat_reject_cnt'] = '';
         }
@@ -75,11 +75,11 @@ class getTestStationStat
         //构建查询sql
         $tmp = array();
         for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
-            array_push($tmp, "reject_cnt_$i");
+            array_push($tmp, "fp_cnt_$i");
         }
         $sqlStr = join(", ", $tmp);
         $db->where('order_num', $order_num);
-        $res_order_info = $db->getOne($this->_table2, $sqlStr . ', top_err_station, top_err_station_time, top_err_station_end');
+        $res_order_info = $db->getOne($this->table2, $sqlStr . ', top_err_station, top_err_station_time, top_err_station_end');
         if (!$res_order_info) {
             msg(402, $db->getLastError());
             return;
@@ -101,14 +101,13 @@ class getTestStationStat
         $s = $res_orders['status'] == 1;
         $e = $res_order_info['top_err_station_end'];
         if (!$t || ($s == 1 && time() - strtotime($t) >= 60) || ($s > 1 && $e == 0)) { //重新计算
-
             //计算
             $ret['top_err_station'] = array();
             for ($i = 1; $i < $res_orders['station_cnt']; $i++) {
                 $db->where('order_num', $order_num)->where('station', "FT$i");
                 $db->groupBy('error_code');
                 $db->orderBy('count(*)');
-                $ret['top_err_station']["FT$i"] = json_encode(build_packed_ret($db->get($this->_table4, 3, 'error_code, count(*)'), JSON_UNESCAPED_UNICODE));
+                $ret['top_err_station']["FT$i"] = json_encode(buildPackedRet($db->get($this->table4, 3, 'error_code, count(*)'), JSON_UNESCAPED_UNICODE));
             }
 
             //写入
@@ -120,7 +119,7 @@ class getTestStationStat
                 $updateData['top_err_station_end'] = 1;
             }
             $db->where('order_num', $order_num);
-            if (!$db->update($this->_table2, $updateData)) {
+            if (!$db->update($this->table2, $updateData)) {
                 msg(402, $db->getLastError());
                 return;
             }

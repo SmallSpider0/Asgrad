@@ -3,8 +3,8 @@ namespace asgrad\log;
 
 class getLogInfo
 {
-    private $_table1 = "log_test";
-    private $_table2 = "log_debug";
+    private $table1 = "log_test";
+    private $table2 = "log_debug";
 
     public function run($ROLE)
     {
@@ -16,10 +16,10 @@ class getLogInfo
         $db->where('user_id', $user_id);
         $db->where('id', $id);
         if ($mode == 0) {
-            $tb = $this->_table1;
+            $tb = $this->table1;
         } else {
-            $tb = $this->_table2;
+            $tb = $this->table2;
         }
-        db_getone($tb, 'res', '', 'test_item, test_log');
+        dbGetOne($tb, 'res', '', 'test_item, test_log');
     }
 }

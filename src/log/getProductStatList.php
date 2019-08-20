@@ -3,8 +3,8 @@ namespace asgrad\log;
 
 class getProductStatList
 {
-    private $_table1 = "orders";
-    private $_table2 = "product";
+    private $table1 = "orders";
+    private $table2 = "product";
 
     public function run($ROLE)
     {
@@ -16,7 +16,7 @@ class getProductStatList
 
         //订单存在
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->_table1, 'station_cnt');
+        $res_orders = $db->getOne($this->table1, 'station_cnt');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
@@ -34,7 +34,7 @@ class getProductStatList
                 $db->where('status', $_POST['status']);
             }
         }
-        $total = $db->getValue($this->_table2, "count(*)");
+        $total = $db->getValue($this->table2, "count(*)");
 
         //查询
         $db->where('order_num', $order_num);
@@ -58,14 +58,14 @@ class getProductStatList
 
         //分页
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->_table2, $page, $sqlStr);
+        $res = $db->arraybuilder()->paginate($this->table2, $page, $sqlStr);
         if (!$res) {
             msg(402, $db->getLastError());
             return;
         }
 
         //构建返回值
-        $ret = build_packed_ret($res, $total);
+        $ret = buildPackedRet($res, $total);
         msg(200, $ret);
     }
 }

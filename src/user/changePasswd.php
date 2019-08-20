@@ -3,8 +3,8 @@ namespace asgrad\user;
 
 class changePasswd
 {
-    private $_table1 = 'user_login_web';
-    private $_table2 = 'user_login_pc';
+    private $table1 = 'user_login_web';
+    private $table2 = 'user_login_pc';
 
     public function run($ROLE)
     {
@@ -15,9 +15,9 @@ class changePasswd
         $new_passwd = $_POST['new_passwd'];
 
         if ($mode == 0) {
-            $tb = $this->_table1;
+            $tb = $this->table1;
         } else {
-            $tb = $this->_table2;
+            $tb = $this->table2;
         }
 
         //验证密码正确性
@@ -35,6 +35,6 @@ class changePasswd
             "passwd" => $PSW['passwd'],
         );
         $db->where('id', $user_id);
-        db_update($tb, $updateData);
+        dbUpdate($tb, $updateData);
     }
 }

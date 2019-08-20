@@ -3,8 +3,8 @@ namespace asgrad\user;
 
 class login
 {
-    private $_table1 = "user_login_web";
-    private $_table2 = "user_login_pc";
+    private $table1 = "user_login_web";
+    private $table2 = "user_login_pc";
 
     public function run($ROLE)
     {
@@ -22,11 +22,11 @@ class login
         }
 
         if ($mode2 == '0') { //web登录
-            $tb = $this->_table1;
+            $tb = $this->table1;
             $res = $db->getOne($tb, 'id, salt, passwd, day_login_err_count, grant_time_out');
         } else { //pc登录
-            $tb = $this->_table2;
-            $res_web = $db->getOne($this->_table1, 'id, grant_time_out'); //从web表获取用户id和授权时间
+            $tb = $this->table2;
+            $res_web = $db->getOne($this->table1, 'id, grant_time_out'); //从web表获取用户id和授权时间
             $db->where('id', $res_web['id']);
             $res = $db->getOne($tb, 'id, salt, passwd, day_login_err_count'); //从与web用户绑定的pc用户表获取登录信息
             $res['grant_time_out'] = $res_web['grant_time_out'];

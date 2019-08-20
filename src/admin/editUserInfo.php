@@ -3,8 +3,8 @@ namespace asgrad\admin;
 
 class editUserInfo
 {
-    private $_table1 = "user_login_web";
-    private $_table2 = "user_info";
+    private $table1 = "user_login_web";
+    private $table2 = "user_info";
 
     public function run($ROLE)
     {
@@ -26,7 +26,7 @@ class editUserInfo
         //更新用户登录表
         if (count($updateData1) > 0) {
             $db->where('id', $user_id);
-            if (!$db->update($this->_table1, $updateData1)) {
+            if (!$db->update($this->table1, $updateData1)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;
@@ -36,7 +36,7 @@ class editUserInfo
         //更新用户信息表
         if (count($updateData2) > 0) {
             $db->where('user_id', $user_id);
-            if (!$db->update($this->_table2, $updateData2)) {
+            if (!$db->update($this->table2, $updateData2)) {
                 $db->rollback();
                 msg(402, $db->getLastError());
                 return;

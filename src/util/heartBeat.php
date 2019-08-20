@@ -3,9 +3,9 @@ namespace asgrad\util;
 
 class heartBeat
 {
-    private $_table1 = "admin_login";
-    private $_table2 = "user_login_web";
-    private $_table3 = "user_login_pc";
+    private $table1 = "admin_login";
+    private $table2 = "user_login_web";
+    private $table3 = "user_login_pc";
 
     public function run($ROLE)
     {
@@ -19,13 +19,13 @@ class heartBeat
         );
         //1 管理员 2 web 3 pc
         if ($ROLE == 1) {
-            $tb = $this->_table1;
+            $tb = $this->table1;
         } elseif ($ROLE == 2) {
-            $tb = $this->_table2;
+            $tb = $this->table2;
         } elseif ($ROLE == 3) {
-            $tb = $this->_table3;
+            $tb = $this->table3;
         }
-        db_update($tb, $updateData);
+        dbUpdate($tb, $updateData);
     }
 
 }
