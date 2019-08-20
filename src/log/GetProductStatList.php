@@ -50,7 +50,7 @@ class GetProductStatList
         }
 
         //构建查询sql
-        $tmp = array();
+        $tmp = array("sn");
         for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
             array_push($tmp, "test_cnt_$i, test_time_$i");
         }
