@@ -27,7 +27,7 @@ class Login
         } else { //pc登录
             $res_web = $db->getOne($this->table1, 'id, grant_time_out'); //从web表获取用户id和授权时间
             $db->where('id', $res_web['id']);
-            $res = $db->getOne($this->table2, 'id, salt, passwd, day_login_err_count, api_key, security_key'); //从与web用户绑定的pc用户表获取登录信息
+            $res = $db->getOne($this->table2, 'id, salt, passwd, day_login_err_count, api_key, security_key, time_out'); //从与web用户绑定的pc用户表获取登录信息
             $res['grant_time_out'] = $res_web['grant_time_out'];
         }
         //判断授权时间
@@ -45,7 +45,7 @@ class Login
             } else {
                 //开始事务
                 $db->startTransaction();
-                if ($mode2 == '0') { //web登录
+                if ($mode2 == '0' || ($mode2 == '1' && $res['time_out'] < time())) { //web登录 & pc登录已过期
                     $api_key = random(24);
                     $security_key = random(32);
                     $updateData = array(
@@ -55,7 +55,7 @@ class Login
                         "time_out" => time() + 7200, //2小时
                         "day_login_err_count" => 0,
                     );
-                } else { //pc登录
+                } else { //pc重复登录
                     $api_key = $res['api_key'];
                     $security_key = $res['security_key'];
                     $updateData = array(
