@@ -23,8 +23,10 @@ class Login
         }
 
         if ($mode2 == '0') { //web登录
+            $tb = $this->table1;
             $res = $db->getOne($this->table1, 'id, salt, passwd, day_login_err_count, grant_time_out');
         } else { //pc登录
+            $tb = $this->table2;
             $res_web = $db->getOne($this->table1, 'id, grant_time_out'); //从web表获取用户id和授权时间
             $db->where('id', $res_web['id']);
             $res = $db->getOne($this->table2, 'id, salt, passwd, day_login_err_count, api_key, security_key, time_out'); //从与web用户绑定的pc用户表获取登录信息
@@ -66,7 +68,7 @@ class Login
                 }
 
                 $db->where('id', $res['id']);
-                if (!$db->update($this->table2, $updateData)) {
+                if (!$db->update($tb, $updateData)) {
                     $db->rollback();
                     msg(402, $db->getLastError());
                     return;
