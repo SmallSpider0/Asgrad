@@ -54,9 +54,11 @@ class GetOrderStat
 
         //计算整体直通率
         $ret['fpy'] = 1;
+        $ret['fpy_station'] = array();
         foreach ($res_order_info as $key => $value) {
             if (!in_array($key, ['top_err_order', 'top_err_order_time', 'top_err_order_end'])) {
                 $ret['fpy'] = $ret['fpy'] * $value / $res_orders['quantity'];
+                $ret['fpy_station'][$key] = $value / $res_orders['quantity'];
             }
         }
 
