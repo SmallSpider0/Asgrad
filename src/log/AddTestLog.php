@@ -27,7 +27,7 @@ class AddTestLog
         //-------判断接口调用合法性-------
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->table1, 'status, station_cnt, made_in');
+        $res_orders = $db->getOne($this->table1, 'status, station_cnt, made_in, rt_list');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
@@ -36,6 +36,7 @@ class AddTestLog
             msg(403, '不合法的调用');
             return;
         }
+        $rt_list = explode(",", $res_orders['rt_list']);
 
         //-------解析输入数据相关字段-------
 
@@ -185,14 +186,14 @@ class AddTestLog
             }
 
             $test_cnt_now = $res_product[$test_cnt] + 1;
-
             //构建更新数据
             $status = null;
             //状态
             if ($result == 1) {
                 $status = 0;
             } else {
-                if ($test_cnt_now % ($res_user['retest_times'] + 1) == 0) {
+                if (count($rt_list) > 0 && in_array($station_now[2], $rt_list) && ($test_cnt_now % ($res_user['retest_times'] + 1) == 0)) {
+                    //有重测站
                     $status = 2;
                 } else {
                     $status = 1;
@@ -263,7 +264,7 @@ class AddTestLog
                 $updateData3[$fp_cnt] = $res_order_info[$fp_cnt] + 1; //测试站首次通过数量
             }
         } else { //失败
-            if ($test_cnt_now == $res_user['retest_times'] + 1) {
+            if (count($rt_list) > 0 && in_array($station_now[2], $rt_list) && $test_cnt_now == $res_user['retest_times'] + 1) {
                 $updateData3[$reject_cnt] = $res_order_info[$reject_cnt] + 1; //测试站不良品数量
                 $data['rt'] = 'true'; //需要返修
             }

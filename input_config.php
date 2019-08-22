@@ -45,6 +45,7 @@ $input_config = [
             'product_model' => 'Required|Str',
             'quantity' => 'Required|IntGt:0',
             'station_cnt' => 'Required|IntGeLe:1,10',
+            'rt_list' => 'Str',
             'plan_online_time' => 'Required|DateTime',
             'working_procedure' => 'Required',
             'hid_list' => 'Required',
