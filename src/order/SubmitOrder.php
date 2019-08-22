@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\order;
 
 class SubmitOrder
@@ -20,7 +21,6 @@ class SubmitOrder
         $station_cnt = $_POST['station_cnt'];
         $plan_online_time = $_POST['plan_online_time'];
         $working_procedure = $_POST['working_procedure'];
-        $test_seq = $_POST['test_seq'];
         $hid_list = $_POST['hid_list'];
 
         //--------开始事务------------
@@ -40,7 +40,6 @@ class SubmitOrder
             'station_cnt' => $station_cnt,
             'plan_online_time' => $plan_online_time,
             'working_procedure' => $working_procedure,
-            'test_seq' => $test_seq,
         );
         if (!$db->insert($this->table2, $inData)) {
             $db->rollback();
@@ -97,13 +96,13 @@ class SubmitOrder
         //文件信息存入数据库
         $inData = array();
         if (isset($filelist['name'])) {
-            array_push($inData, array($filelist['md5'], $filelist['savename'], $order_num));
+            array_push($inData, array($filelist['md5'], $filelist['name'], $filelist['savename'], $order_num));
         } else {
             foreach ($filelist as $file) {
-                array_push($inData, array($file['md5'], $file['savename'], $order_num));
+                array_push($inData, array($file['md5'], $file['name'], $file['savename'], $order_num));
             }
         }
-        $keys = array("file_md5", "file_name", "order_num");
+        $keys = array("file_md5", "file_ori_name", "file_name", "order_num");
         if (!$db->insertMulti($this->table4, $inData, $keys)) {
             $db->rollback();
             msg(402, $db->getLastError());

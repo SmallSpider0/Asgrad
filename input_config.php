@@ -47,7 +47,6 @@ $input_config = [
             'station_cnt' => 'Required|IntGeLe:1,10',
             'plan_online_time' => 'Required|DateTime',
             'working_procedure' => 'Required',
-            'test_seq' => 'Required',
             'hid_list' => 'Required',
             'file' => 'Required|File',
         ],
@@ -104,6 +103,8 @@ $input_config = [
             'made_in' => 'Str',
             'date_start' => 'DateTime',
             'date_end' => 'DateTime',
+            'station' => 'Str',
+            'error_code' => 'Str',
         ],
         'GetDebugLogList' =>  [
             'user_id' => 'Required|IntGt:0',

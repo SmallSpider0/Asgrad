@@ -4,6 +4,7 @@ namespace asgrad\log;
 
 /*
 间隔固定时间 轮询调用，同时也可提供刷新按钮 用户手动刷新数据
+(0)订单当前实际产出 订单预计产出 测试站数量
 (1)整体直通率，FPY(%)=p1*p2*p3(每一个测试站的首次良率乘积)
 (2)整体Topissue，数量最多的三类问题，显示发生的测试站别、类型、数量。
 (3)订单实际产出（折线图）
@@ -26,11 +27,15 @@ class GetOrderStat
         //-------查询order表获取测试站数量，产品数量和判断调用合法性-------
 
         $db->where('user_id', $user_id)->where('order_num', $order_num);
-        $res_orders = $db->getOne($this->table1, 'station_cnt, quantity, status');
+        $res_orders = $db->getOne($this->table1, 'station_cnt, quantity, complete_quantity, station_cnt, status');
         if (!$res_orders) {
             msg(403, '不合法的调用');
             return;
         }
+
+        $ret['station_cnt'] = $res_orders['station_cnt'];
+        $ret['quantity'] = $res_orders['quantity'];
+        $ret['complete_quantity'] = $res_orders['complete_quantity'];
 
         //-------查询order_info表获取每个站的FPY-------
 

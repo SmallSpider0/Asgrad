@@ -29,6 +29,12 @@ class GetTestLogList
         if (isset($_POST['date_end'])) {
             $db->where('add_time', $_POST['date_end'], '<');
         }
+        if (isset($_POST['error_code'])) {
+            $db->where('error_code', $_POST['error_code']);
+        }
+        if (isset($_POST['station'])) {
+            $db->where('station', $_POST['station']);
+        }
         $total = $db->getValue($this->table, "count(*)");
 
         //查询
@@ -47,6 +53,12 @@ class GetTestLogList
         }
         if (isset($_POST['date_end'])) {
             $db->where('add_time', $_POST['date_end'], '<');
+        }
+        if (isset($_POST['error_code'])) {
+            $db->where('error_code', $_POST['error_code']);
+        }
+        if (isset($_POST['station'])) {
+            $db->where('station', $_POST['station']);
         }
 
         $db->orderBy('add_time');

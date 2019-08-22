@@ -65,7 +65,7 @@ class GetOrderList
 
         $db->orderBy('plan_online_time');
         $db->pageLimit = $pageLimit;
-        $res = $db->arraybuilder()->paginate($this->table, $page, 'order_num, status, made_in, product_name, product_model, quantity, complete_quantity, station_cnt, plan_online_time, add_time');
+        $res = $db->arraybuilder()->paginate($this->table, $page, 'order_num, status, made_in, product_name, product_model, quantity, complete_quantity, plan_online_time, add_time');
         if (!$res) {
             msg(402, $db->getLastError());
             return;

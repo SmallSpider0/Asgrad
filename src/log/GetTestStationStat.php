@@ -34,6 +34,7 @@ class GetTestStationStat
             msg(403, '不合法的调用');
             return;
         }
+        $ret['quantity'] = $res_orders['quantity'];
 
         //-------查询各站实际产出-------
         $db->where('order_num', $order_num);
