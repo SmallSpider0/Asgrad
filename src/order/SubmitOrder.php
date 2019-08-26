@@ -25,6 +25,8 @@ class SubmitOrder
 
         if (isset($_POST['rt_list'])) {
             $rt_list = $_POST['rt_list'];
+        } else {
+            $rt_list = "";
         }
 
         //--------开始事务------------
