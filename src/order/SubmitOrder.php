@@ -19,10 +19,13 @@ class SubmitOrder
         $product_model = $_POST['product_model'];
         $quantity = $_POST['quantity'];
         $station_cnt = $_POST['station_cnt'];
-        $rt_list = $_POST['rt_list'];
         $plan_online_time = $_POST['plan_online_time'];
         $working_procedure = $_POST['working_procedure'];
         $hid_list = $_POST['hid_list'];
+
+        if (isset($_POST['rt_list'])) {
+            $rt_list = $_POST['rt_list'];
+        }
 
         //--------开始事务------------
         $db->startTransaction();
