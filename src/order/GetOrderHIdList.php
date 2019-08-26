@@ -26,12 +26,18 @@ class GetOrderHIdList
         if (isset($_POST['status'])) {
             $db->where('status', $_POST['status']);
         }
+        if (isset($_POST['type'])) {
+            $db->where('type', $_POST['type']);
+        }
         $total = $db->getValue($this->table2, "count(*)");
 
         //获取硬件id列表
         $db->where('order_num', $order_num);
         if (isset($_POST['status'])) {
             $db->where('status', $_POST['status']);
+        }
+        if (isset($_POST['type'])) {
+            $db->where('type', $_POST['type']);
         }
 
         $db->pageLimit = $pageLimit;
