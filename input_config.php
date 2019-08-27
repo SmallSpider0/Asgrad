@@ -71,6 +71,7 @@ $input_config = [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
             'status' => 'IntIn:0,1,2',
+            'type' => 'StrIn:imei,mac',
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGe:1',
         ],

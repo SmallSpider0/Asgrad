@@ -9,9 +9,9 @@ $config = array(
     'serverAddr' => '127.0.0.1',
     //连接mysql数据库
     'dbconfig' => array(
-        'dbhost' => '120.78.171.98',
-        'dbuser' => 'root',
-        'dbpsw' => 'xzc28901520',
+        'dbhost' => 'rm-bp1t5139o83gi60y790110.mysql.rds.aliyuncs.com',
+        'dbuser' => 'xzc2034222',
+        'dbpsw' => 'Xzc28901520xzc',
         'dbname' => 'asgrad',
         'dbcharset' => 'utf8',
     ),
