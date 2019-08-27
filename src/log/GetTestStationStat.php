@@ -42,10 +42,16 @@ class GetTestStationStat
             $db->where('add_time', $_POST['last_timestamp_comp'], '>');
         }
 
-        $tmp = array();
-        for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
-            array_push($tmp, "complete_quantity_$i");
+        //按测试站筛选
+        if (isset($_POST['station'])) {
+            $tmp = ["complete_quantity_" . $_POST['station']];
+        } else {
+            $tmp = array();
+            for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
+                array_push($tmp, "complete_quantity_$i");
+            }
         }
+
         $sqlStr = join(", ", $tmp);
         $res = $db->get($this->table3, null, "add_time, $sqlStr");
         if ($res) {
@@ -60,10 +66,16 @@ class GetTestStationStat
             $db->where('add_time', $_POST['last_timestamp_reject'], '>');
         }
 
-        $tmp = array();
-        for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
-            array_push($tmp, "reject_cnt_$i");
+        //按测试站筛选
+        if (isset($_POST['station'])) {
+            $tmp = ["reject_cnt_" . $_POST['station']];
+        } else {
+            $tmp = array();
+            for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
+                array_push($tmp, "reject_cnt_$i");
+            }
         }
+
         $sqlStr = join(", ", $tmp);
         $res = $db->get($this->table5, null, "add_time, $sqlStr");
         if (isset($res)) {
@@ -75,9 +87,13 @@ class GetTestStationStat
         //-------查询order_info表获取每个站的FPY-------
 
         //构建查询sql
-        $tmp = array();
-        for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
-            array_push($tmp, "fp_cnt_$i");
+        if (isset($_POST['station'])) {
+            $tmp = ["fp_cnt_" . $_POST['station']];
+        } else {
+            $tmp = array();
+            for ($i = 1; $i <= $res_orders['station_cnt']; $i++) {
+                array_push($tmp, "fp_cnt_$i");
+            }
         }
         $sqlStr = join(", ", $tmp);
         $db->where('order_num', $order_num);
@@ -127,6 +143,15 @@ class GetTestStationStat
             }
         } else { //直接返回
             $ret['top_err_station'] = $res_order_info['top_err_station'];
+        }
+        if (isset($_POST['station'])) {
+            $tmp = json_decode($ret['top_err_station'], true);
+            if (isset($tmp['FT' . $_POST['station']])) {
+                $ret['top_err_station'] = $tmp['FT' . $_POST['station']];
+            } else {
+                msg(400, 'station有误');
+                return;
+            }
         }
 
         msg(200, $ret);

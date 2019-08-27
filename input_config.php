@@ -128,6 +128,7 @@ $input_config = [
         'GetTestStationStat' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',
+            'station' => 'IntGt:0',
             'last_timestamp_good' => 'DateTime',
             'last_timestamp_reject' => 'DateTime',
         ],
