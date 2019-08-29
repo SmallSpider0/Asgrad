@@ -145,7 +145,11 @@ class GetTestStationStat
             $ret['top_err_station'] = $res_order_info['top_err_station'];
         }
         if (isset($_POST['station'])) {
-            $tmp = json_decode($ret['top_err_station'], true);
+            if (is_array($ret['top_err_station'])) {
+                $tmp = $ret['top_err_station'];
+            } else {
+                $tmp = json_decode($ret['top_err_station'], true);
+            }
             if (isset($tmp['FT' . $_POST['station']])) {
                 $ret['top_err_station'] = $tmp['FT' . $_POST['station']];
             } else {
