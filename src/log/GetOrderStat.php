@@ -100,11 +100,37 @@ class GetOrderStat
 
         $res = $db->get($this->table3, null, "add_time, complete_quantity_" . $res_orders['station_cnt'] . " as complete_quantity");
         if (isset($res)) {
-            $ret['stat_complete_quantity'] = buildPackedRet($res);
+            $ret['stat_complete_quantity'] = $this->processStat(buildPackedRet($res));
         } else {
             $ret['stat_complete_quantity'] = '';
         }
 
         msg(200, $ret);
+    }
+
+    /**
+     * 将累计量转换为时间段量
+     *
+     * @param array $res 原始累计量折线图数据
+     *
+     * @return array
+     */
+    private function processStat($res)
+    {
+        if (isset($res['values']) && count($res['values']) > 0) {
+            $ret = [
+                'keys' => $res['keys'],
+                'values' => []
+            ];
+            for ($i = 0; $i < count($res['values']) - 1; $i++) {
+                array_push($ret['values'], [
+                    $res['values'][$i][0] . '~' . $res['values'][$i + 1][0],
+                    $res['values'][$i + 1][1] - $res['values'][$i][1]
+                ]);
+            }
+            return $ret;
+        } else {
+            return $res;
+        }
     }
 }
