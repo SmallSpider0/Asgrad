@@ -418,15 +418,15 @@ function uploadFile($name)
  * 文件下载
  *
  * @param string $file 服务器内文件路径
+ * @param string $file_ori_name 文件原名
  *
  * @return bool
  */
-function fileDownload($file)
+function fileDownload($file, $file_ori_name)
 {
     if (file_exists($file)) {
         header("Content-type:application/octet-stream");
-        $filename = basename($file);
-        header("Content-Disposition:attachment;filename = " . $filename);
+        header("Content-Disposition:attachment;filename = " . $file_ori_name);
         header("Accept-ranges:bytes");
         header("Accept-length:" . filesize($file));
         readfile($file);

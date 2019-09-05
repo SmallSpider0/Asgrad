@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\order;
 
 class DownloadOrderFile
@@ -25,7 +26,8 @@ class DownloadOrderFile
             return;
         }
         $db->where('order_num', $order_num)->where('file_name', $file_name);
-        if (!$db->getOne($this->table2, 'file_name')) {
+        $file_res = $db->getOne($this->table2, 'file_ori_name');
+        if (!$file_res) {
             msg(403, '不合法的调用');
             return;
         }
@@ -33,7 +35,7 @@ class DownloadOrderFile
         //提供下载
         global $config;
         $url = './' . $config['order_files_url'] . '/' . $file_name;
-        if (!fileDownload($url)) {
+        if (!fileDownload($url, $file_res['file_ori_name'])) {
             msg(403, '不合法的调用');
             return;
         }
