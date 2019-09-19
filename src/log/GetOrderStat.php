@@ -122,15 +122,12 @@ class GetOrderStat
                 'keys' => $res['keys'],
                 'values' => []
             ];
-            if (count($res['values']) == 1) {
-                $ret['values'][0] = [date('Y-m-d H:i:s', strtotime("-10 minute", strtotime($res['values'][0][0]))) . '~' . $res['values'][0][0], $res['values'][0][1]];
-            } else {
-                for ($i = 1; $i < count($res['values']) - 1; $i++) {
-                    array_push($ret['values'], [
-                        $res['values'][$i][0] . '~' . $res['values'][$i + 1][0],
-                        $res['values'][$i + 1][1] - $res['values'][$i][1]
-                    ]);
-                }
+            $ret['values'][0] = [date('Y-m-d H:i:s', strtotime("-10 minute", strtotime($res['values'][0][0]))) . '~' . $res['values'][0][0], $res['values'][0][1]];
+            for ($i = 1; $i < count($res['values']) - 1; $i++) {
+                array_push($ret['values'], [
+                    $res['values'][$i][0] . '~' . $res['values'][$i + 1][0],
+                    $res['values'][$i + 1][1] - $res['values'][$i][1]
+                ]);
             }
             return $ret;
         } else {
