@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\log;
 
 class GetDebugLogList
@@ -15,7 +16,7 @@ class GetDebugLogList
         //获取总条数
         $db->where('user_id', $user_id);
         if (isset($_POST['log_id'])) {
-            $db->where('log_id', $_POST['log_id']);
+            $db->where('log_id', '%' . $_POST['log_id'] . '%', 'like');
         }
         if (isset($_POST['date_start'])) {
             $db->where('add_time', $_POST['date_start'], '>');
@@ -28,7 +29,7 @@ class GetDebugLogList
         //查询
         $db->where('user_id', $user_id);
         if (isset($_POST['log_id'])) {
-            $db->where('log_id', $_POST['log_id']);
+            $db->where('log_id', '%' . $_POST['log_id'] . '%', 'like');
         }
         if (isset($_POST['date_start'])) {
             $db->where('add_time', $_POST['date_start'], '>');

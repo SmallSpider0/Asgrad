@@ -32,6 +32,10 @@ class Login
             $res = $db->getOne($this->table2, 'id, salt, passwd, day_login_err_count, api_key, security_key, time_out'); //从与web用户绑定的pc用户表获取登录信息
             $res['grant_time_out'] = $res_web['grant_time_out'];
         }
+        if (!$res) {
+            msg(401, '账号或密码错误');
+            return;
+        }
         //判断授权时间
         if ($res['grant_time_out'] < time()) {
             msg(404, '授权已过期');

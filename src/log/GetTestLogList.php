@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\log;
 
 class GetTestLogList
@@ -15,13 +16,13 @@ class GetTestLogList
         //获取总条数
         $db->where('user_id', $user_id);
         if (isset($_POST['sn'])) {
-            $db->where('sn', $_POST['sn']);
+            $db->where('sn', '%' . $_POST['sn'] . '%', 'like');
         }
         if (isset($_POST['order_num'])) {
-            $db->where('order_num', $_POST['order_num']);
+            $db->where('order_num', '%' . $_POST['order_num'] . '%', 'like');
         }
         if (isset($_POST['made_in'])) {
-            $db->where('made_in', $_POST['made_in']);
+            $db->where('made_in', '%' . $_POST['made_in'] . '%', 'like');
         }
         if (isset($_POST['date_start'])) {
             $db->where('add_time', $_POST['date_start'], '>');
@@ -40,13 +41,13 @@ class GetTestLogList
         //查询
         $db->where('user_id', $user_id);
         if (isset($_POST['sn'])) {
-            $db->where('sn', $_POST['sn']);
+            $db->where('sn', '%' . $_POST['sn'] . '%', 'like');
         }
         if (isset($_POST['order_num'])) {
-            $db->where('order_num', $_POST['order_num']);
+            $db->where('order_num', '%' . $_POST['order_num'] . '%', 'like');
         }
         if (isset($_POST['made_in'])) {
-            $db->where('made_in', $_POST['made_in']);
+            $db->where('made_in', '%' . $_POST['made_in'] . '%', 'like');
         }
         if (isset($_POST['date_start'])) {
             $db->where('add_time', $_POST['date_start'], '>');

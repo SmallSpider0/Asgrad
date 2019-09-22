@@ -27,6 +27,7 @@ $au_config = [
             'GetOrderList' => [2],
             'GetOrderInfo' => [2],
             'GetOrderHIdList' => [2],
+            'GetUnusedHIdList' => [2],
             'SetOrderComplete' => [2],
             'SetOrderStart' => [2],
             'GetOrderData' => [3],

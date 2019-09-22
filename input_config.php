@@ -75,6 +75,10 @@ $input_config = [
             'page' => 'Required|IntGe:1',
             'pageLimit' => 'Required|IntGe:1',
         ],
+        'GetUnusedHIdList' =>  [
+            'user_id' => 'Required|IntGt:0',
+            'order_num' => 'Required|Str',
+        ],
         'SetOrderComplete' =>  [
             'user_id' => 'Required|IntGt:0',
             'order_num' => 'Required|Str',

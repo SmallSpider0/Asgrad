@@ -1,4 +1,5 @@
 <?php
+
 namespace asgrad\order;
 
 class GetOrderList
@@ -15,53 +16,52 @@ class GetOrderList
         //获取总条数
         $db->where('user_id', $user_id);
         if (isset($_POST['order_num'])) {
-            $db->where('order_num', $_POST['order_num']);
-        } else {
-            if (isset($_POST['product_name'])) {
-                $db->where('product_name', $_POST['product_name']);
-            }
-            if (isset($_POST['product_model'])) {
-                $db->where('product_model', $_POST['product_model']);
-            }
-            if (isset($_POST['status'])) {
-                $db->where('status', $_POST['status']);
-            }
-            if (isset($_POST['made_in'])) {
-                $db->where('made_in', $_POST['made_in']);
-            }
-            if (isset($_POST['date_start'])) {
-                $db->where('plan_online_time', $_POST['date_start'], '>');
-            }
-            if (isset($_POST['date_end'])) {
-                $db->where('plan_online_time', $_POST['date_end'], '<');
-            }
+            $db->where('order_num', '%' . $_POST['order_num'] . '%', 'like');
+        }
+        if (isset($_POST['product_name'])) {
+            $db->where('product_name', $_POST['product_name']);
+        }
+        if (isset($_POST['product_model'])) {
+            $db->where('product_model', $_POST['product_model']);
+        }
+        if (isset($_POST['status'])) {
+            $db->where('status', $_POST['status']);
+        }
+        if (isset($_POST['made_in'])) {
+            $db->where('made_in', '%' . $_POST['made_in'] . '%', 'like');
+        }
+        if (isset($_POST['date_start'])) {
+            $db->where('plan_online_time', $_POST['date_start'], '>');
+        }
+        if (isset($_POST['date_end'])) {
+            $db->where('plan_online_time', $_POST['date_end'], '<');
         }
         $total = $db->getValue($this->table, "count(*)");
 
         //查询
         $db->where('user_id', $user_id);
         if (isset($_POST['order_num'])) {
-            $db->where('order_num', $_POST['order_num']);
-        } else {
-            if (isset($_POST['product_name'])) {
-                $db->where('product_name', $_POST['product_name']);
-            }
-            if (isset($_POST['product_model'])) {
-                $db->where('product_model', $_POST['product_model']);
-            }
-            if (isset($_POST['status'])) {
-                $db->where('status', $_POST['status']);
-            }
-            if (isset($_POST['made_in'])) {
-                $db->where('made_in', $_POST['made_in']);
-            }
-            if (isset($_POST['date_start'])) {
-                $db->where('plan_online_time', $_POST['date_start'], '>');
-            }
-            if (isset($_POST['date_end'])) {
-                $db->where('plan_online_time', $_POST['date_end'], '<');
-            }
+            $db->where('order_num', '%' . $_POST['order_num'] . '%', 'like');
         }
+        if (isset($_POST['product_name'])) {
+            $db->where('product_name', $_POST['product_name']);
+        }
+        if (isset($_POST['product_model'])) {
+            $db->where('product_model', $_POST['product_model']);
+        }
+        if (isset($_POST['status'])) {
+            $db->where('status', $_POST['status']);
+        }
+        if (isset($_POST['made_in'])) {
+            $db->where('made_in', '%' . $_POST['made_in'] . '%', 'like');
+        }
+        if (isset($_POST['date_start'])) {
+            $db->where('plan_online_time', $_POST['date_start'], '>');
+        }
+        if (isset($_POST['date_end'])) {
+            $db->where('plan_online_time', $_POST['date_end'], '<');
+        }
+
 
         $db->orderBy('add_time');
         $db->pageLimit = $pageLimit;
